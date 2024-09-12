@@ -1,4 +1,6 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Commerce.Domain.Model.Entities.Contracts;
+
+namespace SweetManagerWebService.Commerce.Domain.Model.Aggregates
 {
     public partial class Subscription
     {

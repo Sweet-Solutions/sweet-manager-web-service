@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Monitoring.Domain.Model.Aggregates;
+using SweetManagerWebService.Profiles.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.Commerce.Domain.Model.Entities.Payments
 {
     public partial class PaymentCustomer
     {
