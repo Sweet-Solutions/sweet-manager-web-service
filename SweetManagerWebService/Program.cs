@@ -12,35 +12,15 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
 #region Database Configuration
 
 // Add Database Connection
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-var connectionStringFromEnvironment = Environment.GetEnvironmentVariable("SweetManagerDbConnection");
-
-if (connectionStringFromEnvironment != null)
+builder.Services.AddDbContext<SweetManagerContext>(options =>
 {
-    connectionString = connectionStringFromEnvironment;
-}
-
-// Configure Database Context and Logging Levels
-builder.Services.AddDbContext<SweetManagerContext>(
-    options =>
-    {
-        if (connectionString != null)
-            if (builder.Environment.IsDevelopment())
-                options.UseMySQL(connectionString)
-                    .LogTo(Console.WriteLine, LogLevel.Information)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors();
-            else if (builder.Environment.IsProduction())
-                options.UseMySQL(connectionString)
-                    .LogTo(Console.WriteLine, LogLevel.Error)
-                    .EnableDetailedErrors();    
-    });
+    options.UseMySQL(builder.Configuration
+        .GetConnectionString("SweetManager"));
+});
 
 #endregion
 
@@ -102,6 +82,8 @@ builder.Services.AddSwaggerGen(
 // Empty for now
 
 #endregion
+
+var app = builder.Build();
 
 // Configuration cors
 app.UseCors(
