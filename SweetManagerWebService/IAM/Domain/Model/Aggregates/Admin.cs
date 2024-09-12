@@ -1,4 +1,10 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Communication.Domain.Model.Aggregates;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Assignments;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Credentials;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Roles;
+using SweetManagerWebService.ResourceManagement.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.IAM.Domain.Model.Aggregates
 {
     public partial class Admin
     {
