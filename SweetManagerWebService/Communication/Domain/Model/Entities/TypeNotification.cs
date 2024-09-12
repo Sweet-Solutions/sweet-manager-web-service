@@ -1,4 +1,6 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Communication.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.Communication.Domain.Model.Entities
 {
     public partial class TypeNotification
     {

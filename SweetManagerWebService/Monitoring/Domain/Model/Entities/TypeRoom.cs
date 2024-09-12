@@ -1,4 +1,6 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Monitoring.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.Monitoring.Domain.Model.Entities
 {
     public partial class TypeRoom
     {
