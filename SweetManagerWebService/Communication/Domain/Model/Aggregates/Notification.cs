@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Communication.Domain.Model.Entities;
+using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.Communication.Domain.Model.Aggregates
 {
     public partial class Notification
     {
