@@ -1,6 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SweetManagerWebService.Commerce.Domain.Model.Aggregates;
+using SweetManagerWebService.Commerce.Domain.Model.Entities.Contracts;
+using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
+using SweetManagerWebService.Communication.Domain.Model.Aggregates;
+using SweetManagerWebService.Communication.Domain.Model.Entities;
+using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Assignments;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Credentials;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Roles;
+using SweetManagerWebService.Monitoring.Domain.Model.Aggregates;
+using SweetManagerWebService.Monitoring.Domain.Model.Entities;
+using SweetManagerWebService.Profiles.Domain.Model.Aggregates;
+using SweetManagerWebService.Profiles.Domain.Model.Entities;
+using SweetManagerWebService.ResourceManagement.Domain.Model.Aggregates;
+using SweetManagerWebService.ResourceManagement.Domain.Model.Entities;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Entities;
 
-namespace SweetManagerWebService.Models
+namespace SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration
 {
     public partial class SweetManagerContext : DbContext
     {
