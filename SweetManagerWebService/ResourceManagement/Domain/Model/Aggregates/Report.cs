@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+using SweetManagerWebService.ResourceManagement.Domain.Model.Entities;
+
+namespace SweetManagerWebService.ResourceManagement.Domain.Model.Aggregates
 {
     public partial class Report
     {

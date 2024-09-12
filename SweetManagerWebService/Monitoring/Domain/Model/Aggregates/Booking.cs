@@ -1,4 +1,6 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
+
+namespace SweetManagerWebService.Monitoring.Domain.Model.Aggregates
 {
     public partial class Booking
     {
