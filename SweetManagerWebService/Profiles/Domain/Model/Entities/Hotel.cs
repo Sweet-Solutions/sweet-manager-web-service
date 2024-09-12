@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+using SweetManagerWebService.Monitoring.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.Profiles.Domain.Model.Entities
 {
     public partial class Hotel
     {
