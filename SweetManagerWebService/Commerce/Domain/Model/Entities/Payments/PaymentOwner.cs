@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Entities;
+
+namespace SweetManagerWebService.Commerce.Domain.Model.Entities.Payments
 {
     public partial class PaymentOwner
     {

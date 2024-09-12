@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Commerce.Domain.Model.Aggregates;
+using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.Commerce.Domain.Model.Entities.Contracts
 {
     public partial class ContractOwner
     {
