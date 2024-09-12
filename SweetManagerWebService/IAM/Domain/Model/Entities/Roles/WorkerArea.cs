@@ -1,4 +1,6 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.IAM.Domain.Model.Entities.Assignments;
+
+namespace SweetManagerWebService.IAM.Domain.Model.Entities.Roles
 {
     public partial class WorkerArea
     {

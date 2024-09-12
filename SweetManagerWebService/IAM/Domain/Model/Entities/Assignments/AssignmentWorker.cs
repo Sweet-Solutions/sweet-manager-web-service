@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Roles;
+
+namespace SweetManagerWebService.IAM.Domain.Model.Entities.Assignments
 {
     public partial class AssignmentWorker
     {
