@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Monitoring.Domain.Model.Entities;
+using SweetManagerWebService.Profiles.Domain.Model.Entities;
+
+namespace SweetManagerWebService.Monitoring.Domain.Model.Aggregates
 {
     public partial class Room
     {
