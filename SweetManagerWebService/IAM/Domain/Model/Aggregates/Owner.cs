@@ -1,4 +1,11 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Commerce.Domain.Model.Entities.Contracts;
+using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
+using SweetManagerWebService.Communication.Domain.Model.Aggregates;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Credentials;
+using SweetManagerWebService.IAM.Domain.Model.Entities.Roles;
+using SweetManagerWebService.Profiles.Domain.Model.Entities;
+
+namespace SweetManagerWebService.IAM.Domain.Model.Aggregates
 {
     public partial class Owner
     {

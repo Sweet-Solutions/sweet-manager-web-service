@@ -1,4 +1,6 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.IAM.Domain.Model.Entities.Credentials
 {
     public partial class OwnerCredential
     {
