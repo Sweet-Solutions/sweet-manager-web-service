@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates;
+
+namespace SweetManagerWebService.SupplyManagement.Domain.Model.Entities
 {
     public partial class SuppliesRequest
     {

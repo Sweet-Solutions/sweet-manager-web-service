@@ -1,4 +1,7 @@
-﻿namespace SweetManagerWebService.Models
+﻿using SweetManagerWebService.Profiles.Domain.Model.Aggregates;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Entities;
+
+namespace SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates
 {
     public partial class Supply
     {
