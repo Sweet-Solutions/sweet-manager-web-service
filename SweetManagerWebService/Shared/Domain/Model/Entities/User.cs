@@ -1,5 +1,4 @@
-﻿using SweetManagerWebService.IAM.Domain.Model.Entities.Roles;
-using SweetManagerWebService.Shared.Domain.Model.ValueObjects;
+﻿using SweetManagerWebService.Shared.Domain.Model.ValueObjects;
 
 namespace SweetManagerWebService.Shared.Domain.Model.Entities;
 
