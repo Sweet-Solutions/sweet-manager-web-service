@@ -41,7 +41,6 @@
     <Folder Include="IAM\Infrastructure\" />
     <Folder Include="IAM\Interfaces\" />
     <Folder Include="Monitoring\Interfaces\ACL\" />
-    <Folder Include="Monitoring\Interfaces\REST\Transform\" />
   </ItemGroup>
 
 </Project>
