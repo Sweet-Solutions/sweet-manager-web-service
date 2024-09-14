@@ -5,7 +5,9 @@ namespace SweetManagerWebService.IAM.Domain.Model.Aggregates;
 
 public partial class Owner : IEntityWithCreatedUpdatedDate
 {
+    [NotMapped]
     [Column("CreatedAt")] public DateTimeOffset? CreatedDate { get; set; }
     
+    [NotMapped]
     [Column("UpdatedAt")] public DateTimeOffset? UpdatedDate { get; set; }
 }
