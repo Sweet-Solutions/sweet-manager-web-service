@@ -5,7 +5,5 @@ namespace SweetManagerWebService.Monitoring.Domain.Repositories
 {
     public interface IBookingRepository :
         IBaseRepository<Booking>
-    {
-        
-    }
+    { }
 }
