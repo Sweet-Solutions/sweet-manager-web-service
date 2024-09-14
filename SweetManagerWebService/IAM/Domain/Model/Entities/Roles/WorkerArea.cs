@@ -2,10 +2,11 @@
 
 namespace SweetManagerWebService.IAM.Domain.Model.Entities.Roles
 {
-    public partial class WorkerArea
+    public partial class WorkerArea(string name)
     {
         public int Id { get; }
-        public string Name { get; set; } = null!;
+
+        public string Name { get; set; } = name;
 
         public virtual ICollection<AssignmentWorker> AssignmentsWorkers { get; } = [];
     }
