@@ -17,5 +17,10 @@ namespace SweetManagerWebService.Monitoring.Infrastructure.Persistence.EFC.Repos
             await Context.Set<Room>().Where(r => r.Id == id)
             .ExecuteUpdateAsync(r => r
             .SetProperty(u => u.State, roomState.ToString())) > 0;
+
+        public async Task<IEnumerable<Room>> FindByTypeRoomIdAsync
+            (int typeRoomId) => await Context.Set<Room>()
+            .Where(r => r.TypesRoomsId == typeRoomId)
+            .ToListAsync();
     }
 }
