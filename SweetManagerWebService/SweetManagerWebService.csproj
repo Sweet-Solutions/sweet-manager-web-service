@@ -41,7 +41,6 @@
     <Folder Include="IAM\Infrastructure\" />
     <Folder Include="IAM\Interfaces\" />
     <Folder Include="Monitoring\Domain\Services\TypeRoom\" />
-    <Folder Include="Monitoring\Domain\Services\Room\" />
   </ItemGroup>
 
 </Project>
