@@ -6,10 +6,10 @@ public interface IWorkerQueryService
 {
     Task<IEnumerable<Model.Aggregates.Worker>> Handle(GetAllUsersQuery query);
 
-    Task<Model.Aggregates.Worker> Handle(GetUserByIdQuery query);
+    Task<Model.Aggregates.Worker?> Handle(GetUserByIdQuery query);
 
-    Task<Model.Aggregates.Worker> Handle(GetUserByEmailQuery query);
+    Task<Model.Aggregates.Worker?> Handle(GetUserByEmailQuery query);
 
-    Task<Model.Aggregates.Worker> Handle(GetUserIdByEmailQuery query);
+    Task<int?> Handle(GetUserIdByEmailQuery query);
 
 }
