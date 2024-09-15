@@ -3,7 +3,6 @@ using SweetManagerWebService.IAM.Domain.Model.Entities.Assignments;
 using SweetManagerWebService.IAM.Domain.Model.Entities.Credentials;
 using SweetManagerWebService.IAM.Domain.Model.Entities.Roles;
 using SweetManagerWebService.ResourceManagement.Domain.Model.Aggregates;
-using SweetManagerWebService.Shared.Domain.Model.Entities;
 
 namespace SweetManagerWebService.IAM.Domain.Model.Aggregates
 {
