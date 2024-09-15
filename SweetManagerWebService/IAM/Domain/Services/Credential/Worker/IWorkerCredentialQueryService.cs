@@ -5,6 +5,6 @@ namespace SweetManagerWebService.IAM.Domain.Services.Credential.Worker;
 
 public interface IWorkerCredentialQueryService
 {
-    Task<WorkerCredential> Handle(GetUserCredentialByIdQuery query);
+    Task<WorkerCredential?> Handle(GetUserCredentialByIdQuery query);
     
 }
