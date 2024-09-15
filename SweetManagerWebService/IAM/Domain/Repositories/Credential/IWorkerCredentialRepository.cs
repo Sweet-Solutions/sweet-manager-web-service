@@ -4,6 +4,6 @@ namespace SweetManagerWebService.IAM.Domain.Repositories.Credential;
 
 public interface IWorkerCredentialRepository
 {
-    Task<WorkerCredential> FindByIdAsync(int id);
+    Task<WorkerCredential?> FindByWorkersIdAsync(int workersId);
     
 }
