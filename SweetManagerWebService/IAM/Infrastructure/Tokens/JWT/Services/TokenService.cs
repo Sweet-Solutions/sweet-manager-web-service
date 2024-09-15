@@ -22,7 +22,8 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
         [
             new Claim(ClaimTypes.Sid, user.Id.ToString()),
             new Claim(ClaimTypes.Hash, user.PasswordHash),
-            new Claim(ClaimTypes.Role, user.Role.Name.ToString())
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim(ClaimTypes.Locality, user.Hotel.ToString())
         ];
 
         JwtSecurityToken token = new(
@@ -74,8 +75,10 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
             var code = Convert.ToString(result.Claims.First(claim => claim.Type == ClaimTypes.Hash).Value);
 
             var role = Convert.ToString(result.Claims.First(claim =>claim.Type ==  ClaimTypes.Role).Value);
+
+            var hotel = Convert.ToString(result.Claims.First(claim => claim.Type == ClaimTypes.Locality).Value);
             
-            return new { Id = id, Code = code , Role = role };
+            return new { Id = id, Code = code , Role = role , Hotel = hotel };
         }
         catch (Exception)
         {
