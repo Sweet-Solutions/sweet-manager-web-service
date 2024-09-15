@@ -4,11 +4,11 @@ namespace SweetManagerWebService.IAM.Domain.Services.Users.Owner;
 
 public interface IOwnerQueryService
 {
-    Task<IEnumerable<Model.Aggregates.Owner>> Handle(GetAllUsersQuery query);
+    Task<Model.Aggregates.Owner?> Handle(GetAllUsersQuery query);
 
-    Task<Model.Aggregates.Owner> Handle(GetUserByIdQuery query);
+    Task<Model.Aggregates.Owner?> Handle(GetUserByIdQuery query);
 
-    Task<Model.Aggregates.Owner> Handle(GetUserByEmailQuery query);
+    Task<Model.Aggregates.Owner?> Handle(GetUserByEmailQuery query);
 
     Task<int?> Handle(GetUserIdByEmailQuery query);
     
