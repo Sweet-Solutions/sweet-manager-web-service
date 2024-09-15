@@ -1,4 +1,5 @@
-﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
+﻿using Microsoft.EntityFrameworkCore;
+using SweetManagerWebService.IAM.Domain.Model.Aggregates;
 using SweetManagerWebService.IAM.Domain.Repositories.Users;
 using SweetManagerWebService.Profiles.Domain.Model.Entities;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -38,4 +39,22 @@ public class OwnerRepository(SweetManagerContext context) : BaseRepository<Owner
             where ow.Email.Equals(email)
             select ow.Id
         ).FirstOrDefault());
+
+    public async Task<bool> ExecuteUpdateOwnerEmailAsync(string email, int id)
+        => await Context.Set<Owner>().Where(o => o.Id == id)
+            .ExecuteUpdateAsync(o => o.SetProperty(p => p.Email, email)) > 0;
+
+    public async Task<bool> ExecuteUpdateOwnerPhoneAsync(int phone, int id)
+        => await Context.Set<Owner>().Where(o => o.Id == id)
+            .ExecuteUpdateAsync(o => o.SetProperty(p => p.Phone, phone)) > 0;
+
+    public async Task<int?> FindHotelIdByOwnerId(int id)
+        => await Task.Run(() => (
+            from ow in Context.Set<Owner>().ToList()
+            join ho in Context.Set<Hotel>().ToList()
+                on ow.Id equals ho.OwnersId
+            where ow.Id.Equals(id)
+            select ho.Id
+        ).FirstOrDefault());
+    
 }
