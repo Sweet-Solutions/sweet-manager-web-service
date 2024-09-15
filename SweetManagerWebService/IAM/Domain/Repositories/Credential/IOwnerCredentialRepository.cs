@@ -4,5 +4,5 @@ namespace SweetManagerWebService.IAM.Domain.Repositories.Credential;
 
 public interface IOwnerCredentialRepository
 {
-    Task<OwnerCredential> FindByIdAsync(int id);
+    Task<OwnerCredential?> FindByOwnersIdAsync(int ownersId);
 }
