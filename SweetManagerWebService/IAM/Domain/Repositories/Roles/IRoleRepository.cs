@@ -6,7 +6,7 @@ public interface IRoleRepository
 {
     Task<IEnumerable<Role>> FindAllAsync();
 
-    Task<Role> FindByName(int name);
+    Task<Role?> FindByName(string name);
 
-    Task<int> FindIdByName(int name);
+    Task<int?> FindIdByName(string name);
 }
