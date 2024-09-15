@@ -5,9 +5,9 @@ namespace SweetManagerWebService.IAM.Domain.Services.Roles;
 
 public interface IWorkerAreaQueryService
 {
-    Task<IEnumerable<WorkerArea>> Handle(GetAllWorkerAreasQuery query);
+    Task<IEnumerable<WorkerArea>> Handle(GetAllWorkerAreasByHotelIdQuery byHotelIdQuery);
     
-    Task<WorkerArea> Handle(GetWorkerAreaByNameQuery query);
+    Task<WorkerArea?> Handle(GetWorkerAreaByNameAndHotelIdQuery andHotelIdQuery);
 
-    Task<int> Handle(GetWorkerAreaIdByRoleNameQuery query);
+    Task<int?> Handle(GetWorkerAreaIdByRoleNameAndHotelIdQuery andHotelIdQuery);
 }
