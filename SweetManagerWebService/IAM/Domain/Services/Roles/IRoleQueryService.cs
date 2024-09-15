@@ -7,8 +7,8 @@ public interface IRoleQueryService
 {
     Task<IEnumerable<Role>> Handle(GetAllRolesQuery query);
 
-    Task<Role> Handle(GetRoleByNameQuery query);
+    Task<Role?> Handle(GetRoleByNameQuery query);
 
-    Task<int> Handle(GetRoleIdByNameQuery query);
+    Task<int?> Handle(GetRoleIdByNameQuery query);
     
 }
