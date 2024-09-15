@@ -3,7 +3,7 @@ using EntityFrameworkCore.CreatedUpdatedDate.Contracts;
 
 namespace SweetManagerWebService.IAM.Domain.Model.Entities.Credentials;
 
-public class OwnerCredentialAudit : IEntityWithCreatedUpdatedDate
+public partial class OwnerCredential : IEntityWithCreatedUpdatedDate
 {
     [NotMapped]
     [Column("CreatedAt")] public DateTimeOffset? CreatedDate { get; set; }
