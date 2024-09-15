@@ -4,5 +4,5 @@ namespace SweetManagerWebService.IAM.Domain.Repositories.Credential;
 
 public interface IAdminCredentialRepository
 {
-    Task<AdminCredential> FindByIdAsync(int id);
+    Task<AdminCredential?> FindByAdminsIdAsync(int adminsId);
 }
