@@ -5,6 +5,6 @@ namespace SweetManagerWebService.IAM.Domain.Services.Credential.Admin;
 
 public interface IAdminCredentialQueryService
 {
-    Task<AdminCredential> Handle(GetUserCredentialByIdQuery query);
+    Task<AdminCredential?> Handle(GetUserCredentialByIdQuery query);
     
 }
