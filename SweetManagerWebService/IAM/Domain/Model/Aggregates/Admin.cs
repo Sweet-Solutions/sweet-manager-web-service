@@ -26,6 +26,7 @@ namespace SweetManagerWebService.IAM.Domain.Model.Aggregates
         public string State { get; private set; } = state;
 
         public virtual AdminCredential? AdminCredential { get; }
+        
         public virtual Role Role { get; } = null!;
 
         public virtual ICollection<AssignmentWorker> AssignmentsWorkers { get; } = [];

@@ -1,4 +1,5 @@
-﻿using SweetManagerWebService.Communication.Domain.Model.Aggregates;
+﻿using Microsoft.EntityFrameworkCore;
+using SweetManagerWebService.Communication.Domain.Model.Aggregates;
 using SweetManagerWebService.IAM.Domain.Model.Aggregates;
 using SweetManagerWebService.IAM.Domain.Repositories.Users;
 using SweetManagerWebService.Profiles.Domain.Model.Entities;
@@ -44,4 +45,24 @@ public class AdminRepository(SweetManagerContext context) : BaseRepository<Admin
                 select ad.Id
         ).FirstOrDefault());
 
+    public async Task<bool> ExecuteUpdateAdminEmailAsync(string email, int id)
+        => await Context.Set<Admin>().Where(a => a.Id == id).
+            ExecuteUpdateAsync(ad => ad.SetProperty(p => p.Email, email)) > 0;
+
+    public async Task<bool> ExecuteUpdateAdminPhoneAsync(int phone, int id)
+        => await Context.Set<Admin>().Where(a => a.Id == id)
+            .ExecuteUpdateAsync(a => a.SetProperty(p => p.Phone, phone)) > 0;
+
+    public async Task<int?> FindHotelIdByAdminId(int id)
+        => await Task.Run(() => (
+            from ad in Context.Set<Admin>().ToList()
+            join nt in Context.Set<Notification>().ToList()
+                on ad.Id equals nt.AdminsId
+            join ow in Context.Set<Owner>().ToList()
+                on nt.OwnersId equals ow.Id
+            join ho in Context.Set<Hotel>().ToList()
+                on ow.Id equals ho.OwnersId
+            where ad.Id == id
+            select ad.Id
+        ).FirstOrDefault());
 }

@@ -1,5 +1,4 @@
-﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
-using SweetManagerWebService.IAM.Domain.Model.Entities.Credentials;
+﻿using SweetManagerWebService.IAM.Domain.Model.Entities.Credentials;
 using SweetManagerWebService.IAM.Domain.Repositories.Credential;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Repositories;
