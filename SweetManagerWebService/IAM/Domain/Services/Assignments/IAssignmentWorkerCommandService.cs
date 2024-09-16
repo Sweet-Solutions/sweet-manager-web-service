@@ -4,6 +4,6 @@ namespace SweetManagerWebService.IAM.Domain.Services.Assignments;
 
 public interface IAssignmentWorkerCommandService
 {
-    Task<bool> Handle(CreateAssignmentWorker command);
+    Task<bool> Handle(CreateAssignmentWorkerCommand command);
     
 }
