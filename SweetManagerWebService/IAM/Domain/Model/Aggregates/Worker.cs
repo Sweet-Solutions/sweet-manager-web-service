@@ -12,11 +12,11 @@ namespace SweetManagerWebService.IAM.Domain.Model.Aggregates
         public int Id { get; private set; } = id;
         public int RolesId { get; private set; } = rolesId;
         public string Username { get; private set; } = username;
-        public string Name { get; private set; } = name;
-        public string Surname { get; private set; } = surname;
+        public string Name { get; private set; } = name.ToUpper();
+        public string Surname { get; private set; } = surname.ToUpper();
         public int Phone { get; private set; } = phone;
         public string Email { get; private set; } = email;
-        public string State { get; private set; } = state;
+        public string State { get; private set; } = state.ToUpper();
 
         public virtual Role Role { get; } = null!;
         

@@ -27,7 +27,7 @@ public class WorkerCommandService(IUnitOfWork unitOfWork,
             // Add Worker
 
             await workerRepository.AddAsync(new Worker(command.Id, command.Username, command.Name, command.Surname,
-                command.RolesId, command.Phone,
+                3, command.Phone,
                 command.Email, command.State));
 
             await unitOfWork.CompleteAsync();

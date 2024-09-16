@@ -14,7 +14,6 @@ public class WorkerAreaCommandService(IUnitOfWork unitOfWork, IWorkerAreaReposit
     {
         try
         {
-            
             if (await workerAreaQueryService.Handle(new GetWorkerAreaByNameAndHotelIdQuery(command.Name, command.HotelId)) is
                 not null)
                 throw new WorkAreaWithTheGivenNameAlreadyExistException();
