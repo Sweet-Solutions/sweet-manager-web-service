@@ -43,7 +43,7 @@ internal class TokenValidationHandler(IOptions<TokenSettings> tokenSettings) : D
 
         try
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(_tokenSettings.Secret));
+            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(_tokenSettings.SecretKey));
 
             SecurityToken securityToken;
 

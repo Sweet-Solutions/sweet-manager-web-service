@@ -14,7 +14,7 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
     
     public string GenerateToken(dynamic user)
     {
-        SymmetricSecurityKey securityKey = new(Encoding.ASCII.GetBytes(_tokenSettings.Secret));
+        SymmetricSecurityKey securityKey = new(Encoding.ASCII.GetBytes(_tokenSettings.SecretKey));
 
         SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -44,7 +44,7 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
 
         try
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(_tokenSettings.Secret));
+            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(_tokenSettings.SecretKey));
             
             JwtSecurityTokenHandler tokenHandler = new();
 

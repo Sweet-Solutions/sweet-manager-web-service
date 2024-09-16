@@ -2,7 +2,7 @@
 
 public class TokenSettings
 {
-    public string Secret { get; set; }
+    public string SecretKey { get; set; }
     
     public string Audience { get; set; }
     
@@ -12,7 +12,7 @@ public class TokenSettings
 
     public TokenSettings()
     {
-        Secret = string.Empty;
+        SecretKey = string.Empty;
         Audience = string.Empty;
         Issuer = string.Empty;
         ExpirationInMinutes = 0;
