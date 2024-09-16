@@ -24,7 +24,7 @@ public class AdminCommandService(IUnitOfWork unitOfWork, IAdminRepository adminR
             
             // Add Admin
 
-            await adminRepository.AddAsync(new Admin(command.Id, command.Username, command.Email, command.RolesId,
+            await adminRepository.AddAsync(new Admin(command.Id, command.Username, command.Email, 2,
                 command.Name, command.Surname, command.Phone, command.State));
 
             await unitOfWork.CompleteAsync();

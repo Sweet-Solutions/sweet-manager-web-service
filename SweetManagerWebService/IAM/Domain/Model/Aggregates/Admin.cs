@@ -15,15 +15,15 @@ namespace SweetManagerWebService.IAM.Domain.Model.Aggregates
         
         public string Username { get; private set; } = username;
         
-        public string Name { get; private set; } = name;
+        public string Name { get; private set; } = name.ToUpper();
         
-        public string Surname { get; private set; } = surname;
+        public string Surname { get; private set; } = surname.ToUpper();
 
         public string Email { get; private set; } = email;
 
         public int Phone { get; private set; } = phone;
         
-        public string State { get; private set; } = state;
+        public string State { get; private set; } = state.ToUpper();
 
         public virtual AdminCredential? AdminCredential { get; }
         
