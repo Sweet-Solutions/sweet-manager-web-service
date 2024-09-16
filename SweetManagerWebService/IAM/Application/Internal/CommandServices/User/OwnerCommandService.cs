@@ -24,8 +24,8 @@ public class OwnerCommandService(IUnitOfWork unitOfWork,
                 throw new EmailAlreadyExistException();
             
             // Add Owner 
-            await ownerRepository.AddAsync(new Owner(command.Id, command.Username, command.Name, command.Surname,
-                command.Phone,
+            await ownerRepository.AddAsync(new Owner(command.Id, command.Username, command.Name, command.Surname, 1
+                ,command.Phone,
                 command.Email, command.State));
 
             await unitOfWork.CompleteAsync();
