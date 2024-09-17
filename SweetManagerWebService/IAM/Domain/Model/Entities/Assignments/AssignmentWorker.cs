@@ -8,8 +8,8 @@ namespace SweetManagerWebService.IAM.Domain.Model.Entities.Assignments
     {
         public int Id { get; }
         public int WorkersAreasId { get; private set; }
-        public int WorkersId { get; private set; } 
-        public int AdminsId { get; private set; } 
+        public int? WorkersId { get; private set; } 
+        public int? AdminsId { get; private set; } 
         public DateTime StartDate { get; private set; } 
         public DateTime FinalDate { get; private set; }
         public string State { get; private set; } 
