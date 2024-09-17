@@ -1,23 +1,55 @@
-﻿using SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates;
+﻿using sweetmanager.API.Shared.Domain.Repositories;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates;
 using SweetManagerWebService.SupplyManagement.Domain.Model.Commands;
+using SweetManagerWebService.SupplyManagement.Domain.Repositories;
 using SweetManagerWebService.SupplyManagement.Domain.Services;
 
 namespace SweetManagerWebService.SupplyManagement.Application.Internal;
 
-public class SupplyCommandService  : ISupplyCommandService
+public class SupplyCommandService(ISupplyRepository supplyRepository, IUnitOfWork unitOfWork) : ISupplyCommandService
 {
-    public Task<bool> Handle(CreateSupplyCommand command)
+    ISupplyRepository _supplyRepository = supplyRepository;
+    IUnitOfWork _unitOfWork = unitOfWork;
+
+    public async Task<bool> Handle(CreateSupplyCommand command)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _supplyRepository.AddAsync(new(command));
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        } 
     }
 
-    public Task<bool> Handle(UpdateSupplyCommand command)
+    public async Task<bool> Handle(UpdateSupplyCommand command)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _supplyRepository.Update(new(command));
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 
-    public Task<bool> Handle(DeleteSupplyCommand command)
+    public async Task<bool> Handle(DeleteSupplyCommand command)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _supplyRepository.Delete(new(command));
+            await _unitOfWork.CompleteAsync();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }

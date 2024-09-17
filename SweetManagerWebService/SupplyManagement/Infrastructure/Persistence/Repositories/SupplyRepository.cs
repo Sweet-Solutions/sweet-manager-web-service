@@ -9,8 +9,5 @@ namespace SweetManagerWebService.SupplyManagement.Infrastructure.Persistence.Rep
 
 public class SupplyRepository(SweetManagerContext context) : BaseRepository<Supply>(context), ISupplyRepository
 {
-    public async Task<bool> GetSupplyById(int id)
-    {
-        return await Context.Set<Supply>().AnyAsync(x => x.Id == id);
-    }
+    
 }

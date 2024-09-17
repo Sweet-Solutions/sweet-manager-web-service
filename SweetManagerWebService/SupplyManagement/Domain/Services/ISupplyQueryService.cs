@@ -1,10 +1,11 @@
 ﻿using SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Queries;
 
 namespace SweetManagerWebService.SupplyManagement.Domain.Services;
 
 public interface ISupplyQueryService
 {
-    Task<bool> GetSupplyById(int id);
+    Task<Supply?> Handle(GetSupplyByIdQuery query);
     
-    Task<IEnumerable<Supply>> GetSupplies();
+    Task<IEnumerable<Supply>> Handle(GetAllSuppliesQuery query);
 }
