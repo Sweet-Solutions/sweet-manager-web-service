@@ -37,6 +37,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commerce\Application\" />
+    <Folder Include="Commerce\Domain\Model\Queries\Payments\" />
+    <Folder Include="Commerce\Domain\Repositories\" />
+    <Folder Include="Commerce\Domain\Services\" />
+    <Folder Include="Commerce\Infrastructure\Persistence\EFC\" />
+    <Folder Include="Commerce\Interfaces\" />
     <Folder Include="IAM\Interfaces\ACL\" />
   </ItemGroup>
 
