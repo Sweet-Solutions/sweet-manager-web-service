@@ -38,7 +38,6 @@ namespace SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates
         
         public void Update(UpdateSupplyCommand command)
         {
-            Id = command.Id; //todo como cambio el id si no tiene set o no lo cambio
             Name = command.Name;
             Price = command.Price;
             Stock = command.Stock;

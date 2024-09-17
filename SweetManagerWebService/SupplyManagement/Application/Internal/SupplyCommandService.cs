@@ -1,6 +1,7 @@
 ﻿using sweetmanager.API.Shared.Domain.Repositories;
 using SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates;
 using SweetManagerWebService.SupplyManagement.Domain.Model.Commands;
+using SweetManagerWebService.SupplyManagement.Domain.Model.Exceptions;
 using SweetManagerWebService.SupplyManagement.Domain.Repositories;
 using SweetManagerWebService.SupplyManagement.Domain.Services;
 
@@ -15,22 +16,53 @@ public class SupplyCommandService(ISupplyRepository supplyRepository, IUnitOfWor
     {
         try
         {
-            await _supplyRepository.AddAsync(new(command));
+
+            if (string.IsNullOrWhiteSpace(command.Name))
+                throw new InvalidSupplyNameException("The name of the supply cannot be empty.");
+        
+            if (command.Price <= 0)
+                throw new InvalidSupplyPriceException("The price of the supply must be greater than zero.");
+        
+            if (command.Stock < 0)
+                throw new InvalidSupplyStockException("The stock of the supply cannot be negative.");
+
+            
+            await _supplyRepository.AddAsync(new Supply(command));
             await _unitOfWork.CompleteAsync();
+
             return true;
         }
         catch (Exception e)
         {
+            
             return false;
         } 
     }
+
 
     public async Task<bool> Handle(UpdateSupplyCommand command)
     {
         try
         {
-            await _supplyRepository.Update(new(command));
+            var existingSupply = await _supplyRepository.FindByIdAsync(command.Id);
+
+            if (existingSupply == null)
+                throw new SupplyNotFoundException($"The supply with ID {command.Id} was not found.");
+
+            
+            if (string.IsNullOrWhiteSpace(command.Name))
+                throw new InvalidSupplyNameException("The name of the supply cannot be empty.");
+        
+            if (command.Price <= 0)
+                throw new InvalidSupplyPriceException("The price of the supply must be greater than zero.");
+        
+            if (command.Stock < 0)
+                throw new InvalidSupplyStockException("The stock of the supply cannot be negative.");
+
+            
+            existingSupply.Update(command);
             await _unitOfWork.CompleteAsync();
+
             return true;
         }
         catch (Exception e)
@@ -39,12 +71,20 @@ public class SupplyCommandService(ISupplyRepository supplyRepository, IUnitOfWor
         }
     }
 
+
     public async Task<bool> Handle(DeleteSupplyCommand command)
     {
         try
         {
-            await _supplyRepository.Delete(new(command));
+            var supplyToDelete = await _supplyRepository.FindByIdAsync(command.Id);
+
+            if (supplyToDelete == null)
+                throw new SupplyNotFoundException($"The supply with ID {command.Id} was not found.");
+
+            
+            _supplyRepository.Remove(supplyToDelete);
             await _unitOfWork.CompleteAsync();
+
             return true;
         }
         catch (Exception e)
@@ -52,4 +92,6 @@ public class SupplyCommandService(ISupplyRepository supplyRepository, IUnitOfWor
             return false;
         }
     }
+
+
 }
