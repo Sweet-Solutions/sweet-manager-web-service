@@ -12,18 +12,18 @@ public class AssignmentWorkerQueryService(IAssignmentWorkerRepository assignment
         return await assignmentWorkerRepository.FindByIdAsync(query.Id);
     }
 
-    public async Task<AssignmentWorker?> Handle(GetAssignmentWorkerByAdminIdQuery query)
-    {
-        return await assignmentWorkerRepository.FindByAdminIdAsync(query.AdminId);
-    }
-
     public async Task<AssignmentWorker?> Handle(GetAssignmentWorkerByWorkerIdQuery query)
     {
-        return await assignmentWorkerRepository.FindByWorkerIdAsync(query.WorkerId);
+        return await assignmentWorkerRepository.FindByWorkerIdAsync(query.WorkerId, query.HotelId);
     }
-
-    public async Task<AssignmentWorker?> Handle(GetAssignmentWorkerByWorkerAreaIdQuery query)
+    
+    public async Task<IEnumerable<AssignmentWorker>> Handle(GetAssignmentWorkerByAdminIdQuery query)
     {
-        return await assignmentWorkerRepository.FindByWorkerAreaIdAsync(query.WorkerAreaId);
+        return await assignmentWorkerRepository.FindByAdminIdAsync(query.AdminId, query.HotelId);
+    }
+    
+    public async Task<IEnumerable<AssignmentWorker>> Handle(GetAssignmentWorkerByWorkerAreaIdQuery query)
+    {
+        return await assignmentWorkerRepository.FindByWorkerAreaIdAsync(query.WorkerAreaId, query.HotelId);
     }
 }

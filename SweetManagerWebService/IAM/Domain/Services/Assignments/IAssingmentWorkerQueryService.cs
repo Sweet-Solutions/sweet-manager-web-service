@@ -7,11 +7,11 @@ namespace SweetManagerWebService.IAM.Domain.Services.Assignments;
 public interface IAssignmentWorkerQueryService
 {
     Task<AssignmentWorker?> Handle(GetAssignmentWorkerByIdQuery query);
-
-    Task<AssignmentWorker?> Handle(GetAssignmentWorkerByAdminIdQuery query);
-
+    
     Task<AssignmentWorker?> Handle(GetAssignmentWorkerByWorkerIdQuery query);
-
-    Task<AssignmentWorker?> Handle(GetAssignmentWorkerByWorkerAreaIdQuery query);
+    
+    Task<IEnumerable<AssignmentWorker>> Handle(GetAssignmentWorkerByAdminIdQuery query);
+    
+    Task<IEnumerable<AssignmentWorker>> Handle(GetAssignmentWorkerByWorkerAreaIdQuery query);
 
 }

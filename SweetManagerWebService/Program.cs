@@ -75,8 +75,6 @@ builder.Services.AddDbContext<SweetManagerContext>(
 
 #endregion
 
-
-
 #region OPENAPI Configuration
 // Configure Lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -130,8 +128,7 @@ builder.Services.AddSwaggerGen(
 
 #endregion
 
-
-
+#region Dependency Injection
 builder.Services.AddScoped<IAdminCommandService, AdminCommandService>();
 builder.Services.AddScoped<IAdminQueryService, AdminQueryService>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
@@ -171,6 +168,7 @@ builder.Services.AddScoped<IAssignmentWorkerRepository, AssignmentWorkerReposito
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<RolesInitializer>();
+#endregion 
 
 #region JWT Configuration
 

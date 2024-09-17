@@ -1,3 +1,3 @@
 ﻿namespace SweetManagerWebService.IAM.Domain.Model.Queries;
 
-public record GetAssignmentWorkerByIdQuery(int Id);
+public record GetAssignmentWorkerByIdQuery(int Id, int HotelId);
