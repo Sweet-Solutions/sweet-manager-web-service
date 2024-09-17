@@ -6,10 +6,10 @@ namespace SweetManagerWebService.IAM.Domain.Repositories.Assignments;
 public interface IAssignmentWorkerRepository : IBaseRepository<AssignmentWorker>
 {
     
-    Task<AssignmentWorker?> FindByWorkerIdAsync(int workerId, int hotelId);
+    Task<AssignmentWorker?> FindByWorkerIdAsync(int workerId);
 
-    Task<IEnumerable<AssignmentWorker>> FindByAdminIdAsync(int adminId, int hotelId);
+    Task<IEnumerable<AssignmentWorker>> FindByAdminIdAsync(int adminId);
 
-    Task<IEnumerable<AssignmentWorker>> FindByWorkerAreaIdAsync(int workerAreaId, int hotelId);
+    Task<IEnumerable<AssignmentWorker>> FindByWorkerAreaIdAsync(int workerAreaId);
     
 }
