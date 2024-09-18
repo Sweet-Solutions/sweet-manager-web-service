@@ -6,6 +6,6 @@ public class SupplyResourceFromEntityAssembler
 {
     public static SupplyResource ToResourceFromEntity(Supply supply)
     {
-        return new SupplyResource(supply.Id, supply.Name, supply.Price, supply.Stock, supply.State);
+        return new SupplyResource(supply.Id, supply.ProvidersId, supply.Name, supply.Price, supply.Stock, supply.State);
     }
 }

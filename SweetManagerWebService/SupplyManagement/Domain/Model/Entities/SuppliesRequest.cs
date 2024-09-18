@@ -15,6 +15,15 @@ namespace SweetManagerWebService.SupplyManagement.Domain.Model.Entities
         public virtual PaymentOwner PaymentOwner { get; } = null!;
         public virtual Supply Supply { get; } = null!;
         
+        public SuppliesRequest(int id, int paymentsOwnersId, int suppliesId, int count, decimal amount)
+        {
+            Id = id;
+            PaymentsOwnersId = paymentsOwnersId;
+            SuppliesId = suppliesId;
+            Count = count;
+            Amount = amount;
+        }
+        
         
         
         

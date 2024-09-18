@@ -30,6 +30,7 @@ namespace SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates
 
         public Supply(CreateSupplyCommand command)
         {
+            ProvidersId = command.ProvidersId; 
             Name = command.Name;
             Price = command.Price;
             Stock = command.Stock;
@@ -38,6 +39,7 @@ namespace SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates
         
         public void Update(UpdateSupplyCommand command)
         {
+            ProvidersId = command.ProvidersId;
             Name = command.Name;
             Price = command.Price;
             Stock = command.Stock;

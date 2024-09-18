@@ -35,19 +35,26 @@ public class SupplyController : ControllerBase
         return Ok(result);
     }
     
-    [HttpPut]
-    
-    public async Task<IActionResult> UpdateSupply([FromBody] UpdateSupplyResource resource)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateSupply(int id, [FromBody] UpdateSupplyResource resource)
     {
-        var result =
-            await _commandService.Handle(UpdateSupplyCommandFromResource.FromResource(resource));
-        if (result is false)
+        // Validate that the provided resource is valid
+        if (!ModelState.IsValid)
         {
-            return BadRequest();
+            return BadRequest(ModelState);
+        }
+
+        // The `id` is passed via the route, so we don't pass it in the body
+        var result = await _commandService.Handle(UpdateSupplyCommandFromResource.FromResource(id, resource));
+
+        if (!result)
+        {
+            return BadRequest("Failed to update supply.");
         }
 
         return Ok(result);
     }
+
     
     [HttpDelete]
     public async Task<IActionResult> DeleteSupply([FromBody] DeleteSupplyResource resource)
@@ -63,19 +70,19 @@ public class SupplyController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    
-    public async Task<IActionResult> GetSupplyById([FromQuery] int id)
+    public async Task<IActionResult> GetSupplyById([FromRoute] int id)
     {
         var result = await _queryService.Handle(new GetSupplyByIdQuery(id));
         if (result is null)
         {
             return BadRequest();
         }
-        
+    
         var supplyResource = SupplyResourceFromEntityAssembler.ToResourceFromEntity(result);
 
         return Ok(supplyResource);
     }
+
     
     [HttpGet]
     

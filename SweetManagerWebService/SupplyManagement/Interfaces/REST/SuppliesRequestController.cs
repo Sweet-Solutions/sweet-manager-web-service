@@ -48,7 +48,7 @@ public class SuppliesRequestController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetSuppliesRequestById([FromQuery] int id)
+    public async Task<IActionResult> GetSuppliesRequestById([FromRoute] int id)
     {
         var result = await _queryService.Handle(new GetSuppliesRequestByIdQuery(id));
         if (result is null)

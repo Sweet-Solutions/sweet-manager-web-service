@@ -4,8 +4,8 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST.Transform;
 
 public class UpdateSupplyCommandFromResource
 {
-    public static UpdateSupplyCommand FromResource(UpdateSupplyResource resource)
+    public static UpdateSupplyCommand FromResource(int Id, UpdateSupplyResource resource)
     {
-        return new UpdateSupplyCommand(resource.Id, resource.Name, resource.Price, resource.Stock, resource.State);
+        return new UpdateSupplyCommand(Id,  resource.ProvidersId, resource.Name, resource.Price, resource.Stock, resource.State);
     }
 }
