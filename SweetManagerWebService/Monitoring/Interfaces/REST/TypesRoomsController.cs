@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SweetManagerWebService.Monitoring.Domain.Model.Queries.TypeRoom;
 using SweetManagerWebService.Monitoring.Domain.Services.TypeRoom;
+using SweetManagerWebService.Monitoring.Interfaces.REST.Resources.TypeRoom;
 using SweetManagerWebService.Monitoring.Interfaces.REST.Transform.TypeRoom;
 
 namespace SweetManagerWebService.Monitoring.Interfaces.REST
@@ -9,9 +9,24 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
     [Route("api/[controller]")]
     [ApiController]
     public class TypesRoomsController
-        (ITypeRoomQueryService typeRoomQueryService) :
+        (ITypeRoomCommandService typeRoomCommandService,
+        ITypeRoomQueryService typeRoomQueryService) :
         ControllerBase
     {
+        [HttpPost]
+        public async Task<IActionResult> CreateTypeRoom
+            ([FromBody] CreateTypeRoomResource resource)
+        {
+            var result = await typeRoomCommandService.Handle
+                (CreateTypeCommandFromResourceAssembler
+                .ToCommandFromResource(resource));
+
+            if (result is false)
+                return BadRequest();
+
+            return Ok(result);
+        }
+
         [HttpGet]
         public async Task<IActionResult> AllTypesRooms()
         {
