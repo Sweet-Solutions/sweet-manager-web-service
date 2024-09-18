@@ -1,0 +1,70 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
+using SweetManagerWebService.ResourceManagement.Domain.Model.Queries.Report;
+using SweetManagerWebService.ResourceManagement.Domain.Services.Report;
+using SweetManagerWebService.ResourceManagement.Interfaces.REST.Resources.Report;
+using SweetManagerWebService.ResourceManagement.Interfaces.REST.Transform.Report;
+
+namespace SweetManagerWebService.ResourceManagement.Interfaces.REST
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    public class ReportsController(IReportCommandService reportCommandService, IReportQueryService reportQueryService) : ControllerBase
+    {
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateReport([FromBody] CreateReportResource resource)
+        {
+            try
+            {
+                var result = await reportCommandService
+                    .Handle(CreateReportCommandFromResourceAssembler
+                        .ToCommandFromResource(resource));
+
+                if (result is false)
+                    return BadRequest("Error creating report.");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (ex) details here for debugging
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error.");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AllReports()
+        {
+            var reports = await reportQueryService.Handle(new GetAllReportsQuery());
+            var reportsResource = reports.Select(ReportResourceFromEntityAssembler.ToResourceFromEntity);
+            return Ok(reportsResource);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ReportById(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid id");
+            }
+
+            try
+            {
+                var report = await reportQueryService.Handle(new GetReportByIdQuery(id));
+
+                if (report is null)
+                {
+                    throw new Exception("Report not found");
+                }
+
+                var reportResource = ReportResourceFromEntityAssembler.ToResourceFromEntity(report);
+                return Ok(reportResource);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+    }
+}
