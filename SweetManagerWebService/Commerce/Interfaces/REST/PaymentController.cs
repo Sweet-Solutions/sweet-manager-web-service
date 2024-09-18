@@ -4,11 +4,13 @@ using SweetManagerWebService.Commerce.Domain.Model.Queries.Payments;
 using SweetManagerWebService.Commerce.Domain.Services.Payments;
 using SweetManagerWebService.Commerce.Interfaces.REST.Resources.Payments;
 using SweetManagerWebService.Commerce.Interfaces.REST.Transform.Payments;
+using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 
 namespace SweetManagerWebService.Commerce.Interfaces.REST;
 
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
+[Authorize]
 public class PaymentController(IPaymentOwnerCommandService paymentOwnerCommandService,
     IPaymentCustomerCommandService paymentCustomerCommandService,
     IPaymentOwnerQueryService paymentOwnerQueryService,

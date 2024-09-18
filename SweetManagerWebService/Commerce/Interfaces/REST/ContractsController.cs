@@ -4,11 +4,13 @@ using SweetManagerWebService.Commerce.Domain.Model.Queries.Contracts;
 using SweetManagerWebService.Commerce.Domain.Services.Contracts;
 using SweetManagerWebService.Commerce.Interfaces.REST.Resources.Contracts;
 using SweetManagerWebService.Commerce.Interfaces.REST.Transform.Contracts;
+using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 
 namespace SweetManagerWebService.Commerce.Interfaces.REST;
 
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
+[Authorize]
 public class ContractsController(IContractOwnerCommandService contractOwnerCommandService,
     IContractOwnerQueryService contractOwnerQueryService) : ControllerBase
 {

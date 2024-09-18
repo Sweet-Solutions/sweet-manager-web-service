@@ -45,6 +45,7 @@ using SweetManagerWebService.IAM.Infrastructure.Persistence.EFC.Repositories.Ass
 using SweetManagerWebService.IAM.Infrastructure.Persistence.EFC.Repositories.Credential;
 using SweetManagerWebService.IAM.Infrastructure.Persistence.EFC.Repositories.Roles;
 using SweetManagerWebService.IAM.Infrastructure.Persistence.EFC.Repositories.User;
+using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 using SweetManagerWebService.IAM.Infrastructure.Population.Roles;
 using SweetManagerWebService.IAM.Infrastructure.Tokens.JWT.Configuration;
 using SweetManagerWebService.IAM.Infrastructure.Tokens.JWT.Services;
@@ -57,7 +58,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers( options => options.Conventions.Add(new KebabCaseRouteNamingConvention()));
 
-builder.Services.AddEndpointsApiExplorer();
+// Configure Lowercase URLs
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+builder.Services.AddEndpointsApiExplorer(); 
 
 builder.Services.AddSwaggerGen();
 
@@ -142,6 +146,8 @@ builder.Services.AddSwaggerGen(
     });
 
 #endregion
+
+builder.Services.AddHttpContextAccessor();
 
 #region Dependency Injection
 
@@ -283,9 +289,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
+app.UseRequestAuthorization();
+
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 
