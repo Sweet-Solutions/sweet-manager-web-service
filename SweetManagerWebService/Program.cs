@@ -49,6 +49,13 @@ using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 using SweetManagerWebService.IAM.Infrastructure.Population.Roles;
 using SweetManagerWebService.IAM.Infrastructure.Tokens.JWT.Configuration;
 using SweetManagerWebService.IAM.Infrastructure.Tokens.JWT.Services;
+using SweetManagerWebService.Monitoring.Application.Internal.CommandServices;
+using SweetManagerWebService.Monitoring.Application.Internal.QueryServices;
+using SweetManagerWebService.Monitoring.Domain.Repositories;
+using SweetManagerWebService.Monitoring.Domain.Services.Booking;
+using SweetManagerWebService.Monitoring.Domain.Services.Room;
+using SweetManagerWebService.Monitoring.Domain.Services.TypeRoom;
+using SweetManagerWebService.Monitoring.Infrastructure.Persistence.EFC.Repositories;
 using SweetManagerWebService.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -189,6 +196,18 @@ builder.Services.AddScoped<IAssignmentWorkerQueryService, AssignmentWorkerQueryS
 builder.Services.AddScoped<IAssignmentWorkerRepository, AssignmentWorkerRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IBookingCommandService, BookingCommandService>();
+builder.Services.AddScoped<IBookingQueryService, BookingQueryService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
+builder.Services.AddScoped<IRoomCommandService, RoomCommandService>();
+builder.Services.AddScoped<IRoomQueryService, RoomQueryService>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+
+builder.Services.AddScoped<ITypeRoomCommandService, TypeRoomCommandService>();
+builder.Services.AddScoped<ITypeRoomQueryService, TypeRoomQueryService>();
+builder.Services.AddScoped<ITypeRoomRepository, TypeRoomRepository>();
 
 builder.Services.AddScoped<RolesInitializer>();
 
