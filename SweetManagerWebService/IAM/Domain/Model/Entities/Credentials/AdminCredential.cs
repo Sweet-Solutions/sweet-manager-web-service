@@ -3,10 +3,11 @@
 namespace  SweetManagerWebService.IAM.Domain.Model.Entities.Credentials
 {
 
-    public partial class AdminCredential
+    public partial class AdminCredential(int adminsId, string code)
     {
-        public int AdminsId { get; set; }
-        public string Code { get; set; } = null!;
+        public int AdminsId { get; set; } = adminsId;
+
+        public string Code { get; set; } = code;
 
         public virtual Admin Admin { get; } = null!;
     }

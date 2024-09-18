@@ -304,6 +304,8 @@ namespace SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configura
 
                 entity.ToTable("owners");
 
+                entity.HasIndex(e => e.RolesId, "fk_owners_roles_id");
+                
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Email)
                     .HasMaxLength(100)
@@ -311,6 +313,7 @@ namespace SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configura
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .HasColumnName("name");
+                entity.Property(e => e.RolesId).HasColumnName("roles_id");
                 entity.Property(e => e.Phone).HasColumnName("phone");
                 entity.Property(e => e.State)
                     .HasMaxLength(20)
@@ -321,6 +324,11 @@ namespace SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configura
                 entity.Property(e => e.Username)
                     .HasMaxLength(50)
                     .HasColumnName("username");
+                
+                entity.HasOne(d => d.Role).WithMany(p => p.Owners)
+                    .HasForeignKey(d => d.RolesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_owners_roles_id");
             });
 
             modelBuilder.Entity<OwnerCredential>(entity =>
@@ -453,18 +461,11 @@ namespace SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configura
 
                 entity.ToTable("roles");
 
-                entity.HasIndex(e => e.OwnersId, "fk_roles_owners_id");
-
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .HasColumnName("name");
-                entity.Property(e => e.OwnersId).HasColumnName("owners_id");
-
-                entity.HasOne(d => d.Owner).WithMany(p => p.Roles)
-                    .HasForeignKey(d => d.OwnersId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_roles_owners_id");
+                
             });
 
             modelBuilder.Entity<Room>(entity =>
