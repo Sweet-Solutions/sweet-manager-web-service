@@ -56,6 +56,8 @@ using SweetManagerWebService.Monitoring.Domain.Services.Booking;
 using SweetManagerWebService.Monitoring.Domain.Services.Room;
 using SweetManagerWebService.Monitoring.Domain.Services.TypeRoom;
 using SweetManagerWebService.Monitoring.Infrastructure.Persistence.EFC.Repositories;
+using SweetManagerWebService.Monitoring.Interfaces.ACL;
+using SweetManagerWebService.Monitoring.Interfaces.ACL.Services;
 using SweetManagerWebService.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -208,6 +210,8 @@ builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<ITypeRoomCommandService, TypeRoomCommandService>();
 builder.Services.AddScoped<ITypeRoomQueryService, TypeRoomQueryService>();
 builder.Services.AddScoped<ITypeRoomRepository, TypeRoomRepository>();
+
+builder.Services.AddScoped<IMonitoringContextFacade, MonitoringContextFacade>();
 
 builder.Services.AddScoped<RolesInitializer>();
 
