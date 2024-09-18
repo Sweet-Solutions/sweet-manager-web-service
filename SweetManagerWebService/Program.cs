@@ -4,6 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using sweetmanager.API.Shared.Domain.Repositories;
+using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Contracts;
+using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Payments;
+using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Subscriptions;
+using SweetManagerWebService.Commerce.Application.Internal.QueryServices.Contracts;
+using SweetManagerWebService.Commerce.Application.Internal.QueryServices.Payments;
+using SweetManagerWebService.Commerce.Application.Internal.QueryServices.Subscriptions;
+using SweetManagerWebService.Commerce.Domain.Repositories.Contracts;
+using SweetManagerWebService.Commerce.Domain.Repositories.Payments;
+using SweetManagerWebService.Commerce.Domain.Repositories.Subscriptions;
+using SweetManagerWebService.Commerce.Domain.Services.Contracts;
+using SweetManagerWebService.Commerce.Domain.Services.Payments;
+using SweetManagerWebService.Commerce.Domain.Services.Subscriptions;
+using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Contracts;
+using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Payments;
+using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Subscriptions;
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.Assignments;
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.Credential;
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.Roles;
@@ -129,6 +144,8 @@ builder.Services.AddSwaggerGen(
 #endregion
 
 #region Dependency Injection
+
+// IAM BOUNDED CONTEXT
 builder.Services.AddScoped<IAdminCommandService, AdminCommandService>();
 builder.Services.AddScoped<IAdminQueryService, AdminQueryService>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
@@ -168,6 +185,24 @@ builder.Services.AddScoped<IAssignmentWorkerRepository, AssignmentWorkerReposito
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<RolesInitializer>();
+
+// COMMERCE BOUNDED CONTEXT
+
+builder.Services.AddScoped<IContractOwnerRepository, ContractOwnerRepository>();
+builder.Services.AddScoped<IPaymentCustomerRepository, PaymentCustomerRepository>();
+builder.Services.AddScoped<IPaymentOwnerRepository, PaymentOwnerRepository>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
+builder.Services.AddScoped<IContractOwnerCommandService, ContractOwnerCommandService>();
+builder.Services.AddScoped<IContractOwnerQueryService, ContractOwnerQueryService>();
+builder.Services.AddScoped<IPaymentCustomerCommandService, PaymentCustomerCommandService>();
+builder.Services.AddScoped<IPaymentCustomerQueryService, PaymentCustomerQueryService>();
+builder.Services.AddScoped<IPaymentOwnerCommandService, PaymentOwnerCommandService>();
+builder.Services.AddScoped<IPaymentOwnerQueryService, PaymentOwnerQueryService>();
+
+builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
+builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>();
+
 #endregion 
 
 #region JWT Configuration
