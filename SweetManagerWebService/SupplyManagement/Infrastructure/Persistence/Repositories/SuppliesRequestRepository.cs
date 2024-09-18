@@ -22,7 +22,7 @@ public class SuppliesRequestRepository(SweetManagerContext context) : BaseReposi
         return await Context.Set<SuppliesRequest>().FirstOrDefaultAsync(f => f.PaymentsOwnersId == paymentOwnerId);
     }
     
-    public async Task<IEnumerable<SuppliesRequest>> FindAllSuppliesRequestsAsync()
+    public async Task<IEnumerable<SuppliesRequest>> FindAllSuppliesRequestsAsync(int queryHotelId)
     {
         return await Task.Run(() => (
             from suppliesRequest in Context.Set<SuppliesRequest>().ToList()

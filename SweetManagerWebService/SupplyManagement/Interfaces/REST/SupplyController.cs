@@ -107,13 +107,15 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllSupplies()
+        [HttpGet("HotelId/{HotelId}")]
+        public async Task<IActionResult> GetAllSupplies([FromRoute] int HotelId)
         {
             try
             {
-                var result = await _queryService.Handle(new GetAllSuppliesQuery());
+                // Pass HotelId into the query
+                var result = await _queryService.Handle(new GetAllSuppliesQuery(HotelId));
 
+                // Map the result to a collection of supply resources
                 var supplyResource = result.Select(SupplyResourceFromEntityAssembler.ToResourceFromEntity);
 
                 return Ok(supplyResource);
@@ -123,6 +125,7 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpGet("provider/{providerId}")]
 

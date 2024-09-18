@@ -9,5 +9,5 @@ public interface ISuppliesRequestRepository : IBaseRepository<SuppliesRequest>
     
     public Task<SuppliesRequest?> FindByPaymentOwnerId(int paymentOwnerId);
 
-    public Task<IEnumerable<SuppliesRequest>> FindAllSuppliesRequestsAsync();
+    public Task<IEnumerable<SuppliesRequest>> FindAllSuppliesRequestsAsync(int HotelId);
 }

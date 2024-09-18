@@ -17,7 +17,7 @@ public class SuppliesRequestQueryService(ISuppliesRequestRepository suppliesRequ
 
     public async Task<IEnumerable<Domain.Model.Entities.SuppliesRequest>> Handle(GetAllSuppliesRequestQuery query)
     {
-        return await _suppliesRequestRepository.ListAsync();
+        return await _suppliesRequestRepository.FindAllSuppliesRequestsAsync(query.HotelId);
     }
     
 

@@ -12,12 +12,10 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST;
 [Produces(MediaTypeNames.Application.Json)]
 public class SuppliesRequestController : ControllerBase
 {
+    private readonly ISuppliesRequestQueryService _queryService;
+    private readonly ISuppliesRequestCommandService _commandService;
 
-    ISuppliesRequestQueryService _queryService;
-    ISuppliesRequestCommandService _commandService;
-
-    public SuppliesRequestController(ISuppliesRequestQueryService queryService,
-        ISuppliesRequestCommandService commandService)
+    public SuppliesRequestController(ISuppliesRequestQueryService queryService, ISuppliesRequestCommandService commandService)
     {
         _queryService = queryService;
         _commandService = commandService;
@@ -26,71 +24,99 @@ public class SuppliesRequestController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateSuppliesRequest([FromBody] CreateSuppliesRequestResource resource)
     {
-        var result =
-            await _commandService.Handle(
-                CreateSuppliesRequestCommandFromResourceAssembler.ToCommandFromResource(resource));
-        if (result is false)
+        try
         {
-            return BadRequest();
+            var result = await _commandService.Handle(CreateSuppliesRequestCommandFromResourceAssembler.ToCommandFromResource(resource));
+            if (!result)
+            {
+                return BadRequest("Failed to create supplies request.");
+            }
+            return Ok(result);
         }
-
-        return Ok(result);
+        catch (Exception ex)
+        {
+            return BadRequest($"An error occurred: {ex.Message}");
+        }
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllSupplies()
+    [HttpGet("HotelId/{HotelId}")]
+    public async Task<IActionResult> GetAllSuppliesRequest([FromRoute] int HotelId)
     {
-        var result = await _queryService.Handle(new GetAllSuppliesRequestQuery());
-        
-        var supplyResource = result.Select(SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity).ToList();
+        try
+        {
+            var result = await _queryService.Handle(new GetAllSuppliesRequestQuery(HotelId));
+    
+            if (result == null || !result.Any())
+            {
+                return BadRequest("No supplies requests found for this hotel.");
+            }
 
-        return Ok(supplyResource);
+            var suppliesRequestResources = result.Select(SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity);
+            return Ok(suppliesRequestResources);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"An error occurred: {ex.Message}");
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetSuppliesRequestById([FromRoute] int id)
     {
-        var result = await _queryService.Handle(new GetSuppliesRequestByIdQuery(id));
-        if (result is null)
+        try
         {
-            return BadRequest();
+            var result = await _queryService.Handle(new GetSuppliesRequestByIdQuery(id));
+            if (result is null)
+            {
+                return BadRequest($"Supplies request with ID {id} not found.");
+            }
+
+            var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
+            return Ok(suppliesRequestResource);
         }
-        
-        var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
-
-        return Ok(suppliesRequestResource);
-
+        catch (Exception ex)
+        {
+            return BadRequest($"An error occurred: {ex.Message}");
+        }
     }
     
-    [HttpGet("{paymentOwnerId}")]
+    [HttpGet("paymentOwner/{paymentOwnerId}")]
     public async Task<IActionResult> GetSuppliesRequestByPaymentOwnerId([FromRoute] int paymentOwnerId)
     {
-        var result = await _queryService.Handle(new GetSuppliesRequestByPaymentOwnerIdQuery(paymentOwnerId));
-        if (result is null)
+        try
         {
-            return BadRequest();
+            var result = await _queryService.Handle(new GetSuppliesRequestByPaymentOwnerIdQuery(paymentOwnerId));
+            if (result is null)
+            {
+                return BadRequest($"No supplies requests found for PaymentOwnerId {paymentOwnerId}.");
+            }
+
+            var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
+            return Ok(suppliesRequestResource);
         }
-        
-        var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
-
-        return Ok(suppliesRequestResource);
-
+        catch (Exception ex)
+        {
+            return BadRequest($"An error occurred: {ex.Message}");
+        }
     }
     
-    [HttpGet("{supplyId}")]
+    [HttpGet("supply/{supplyId}")]
     public async Task<IActionResult> GetSuppliesRequestBySupplyId([FromRoute] int supplyId)
     {
-        var result = await _queryService.Handle(new GetSuppliesRequestBySupplyIdQuery(supplyId));
-        if (result is null)
+        try
         {
-            return BadRequest();
+            var result = await _queryService.Handle(new GetSuppliesRequestBySupplyIdQuery(supplyId));
+            if (result is null)
+            {
+                return BadRequest($"No supplies requests found for SupplyId {supplyId}.");
+            }
+
+            var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
+            return Ok(suppliesRequestResource);
         }
-        
-        var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
-
-        return Ok(suppliesRequestResource);
-
+        catch (Exception ex)
+        {
+            return BadRequest($"An error occurred: {ex.Message}");
+        }
     }
-} 
-    
-    
+}

@@ -13,10 +13,11 @@ public class SupplyQueryService(ISupplyRepository supplyRepository) : ISupplyQue
         return await _supplyRepository.FindByIdAsync(query.Id);
     }
 
-    public async Task<IEnumerable<Domain.Model.Aggregates.Supply>> Handle(GetAllSuppliesQuery query)
+    public Task<IEnumerable<Domain.Model.Aggregates.Supply>> Handle(GetAllSuppliesQuery query)
     {
-        return await _supplyRepository.ListAsync();
+        return _supplyRepository.FindSuppliesByHotelIdAsync(query.HotelId);
     }
+    
 
     public async Task<IEnumerable<Domain.Model.Aggregates.Supply>> Handle(GetSupplyByProviderIdQuery query)
     {
