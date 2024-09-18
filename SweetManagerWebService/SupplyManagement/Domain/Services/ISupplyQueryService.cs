@@ -8,4 +8,12 @@ public interface ISupplyQueryService
     Task<Supply?> Handle(GetSupplyByIdQuery query);
     
     Task<IEnumerable<Supply>> Handle(GetAllSuppliesQuery query);
+    
+    
+    Task<IEnumerable<Supply>> Handle(GetSupplyByProviderIdQuery query);
+    
+    
+    
+    
+    
 }

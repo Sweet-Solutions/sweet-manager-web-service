@@ -103,22 +103,7 @@ builder.Services.AddSwaggerGen(
     });
 
 #endregion
-builder.Services.AddScoped<ISupplyRepository, SupplyRepository>(); 
-builder.Services.AddScoped<ISupplyCommandService, SupplyCommandService>();
-builder.Services.AddScoped<ISupplyQueryService, SupplyQueryService>();
 
-builder.Services.AddScoped<ISuppliesRequestCommandService, SuppliesRequestCommandService>(); 
-builder.Services.AddScoped<ISuppliesRequestQueryService, SuppliesRequestQueryService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ISuppliesRequestRepository, SuppliesRequestRepository>();
-builder.Services.AddScoped<ISupplyRepository, SupplyRepository>(); 
-builder.Services.AddScoped<ISupplyCommandService, SupplyCommandService>();
-builder.Services.AddScoped<ISupplyQueryService, SupplyQueryService>();
-
-builder.Services.AddScoped<ISuppliesRequestCommandService, SuppliesRequestCommandService>(); 
-builder.Services.AddScoped<ISuppliesRequestQueryService, SuppliesRequestQueryService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ISuppliesRequestRepository, SuppliesRequestRepository>();
 
 #region JWT Configuration
 

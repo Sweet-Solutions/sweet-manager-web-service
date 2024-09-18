@@ -17,4 +17,9 @@ public class SupplyQueryService(ISupplyRepository supplyRepository) : ISupplyQue
     {
         return await _supplyRepository.ListAsync();
     }
+
+    public async Task<IEnumerable<Domain.Model.Aggregates.Supply>> Handle(GetSupplyByProviderIdQuery query)
+    {
+        return await _supplyRepository.FindByProvidersId(query.ProviderId);
+    }
 }

@@ -61,6 +61,36 @@ public class SuppliesRequestController : ControllerBase
         return Ok(suppliesRequestResource);
 
     }
+    
+    [HttpGet("{paymentOwnerId}")]
+    public async Task<IActionResult> GetSuppliesRequestByPaymentOwnerId([FromRoute] int paymentOwnerId)
+    {
+        var result = await _queryService.Handle(new GetSuppliesRequestByPaymentOwnerIdQuery(paymentOwnerId));
+        if (result is null)
+        {
+            return BadRequest();
+        }
+        
+        var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
+
+        return Ok(suppliesRequestResource);
+
+    }
+    
+    [HttpGet("{supplyId}")]
+    public async Task<IActionResult> GetSuppliesRequestBySupplyId([FromRoute] int supplyId)
+    {
+        var result = await _queryService.Handle(new GetSuppliesRequestBySupplyIdQuery(supplyId));
+        if (result is null)
+        {
+            return BadRequest();
+        }
+        
+        var suppliesRequestResource = SuppliesRequestResourceFromEntityAssembler.ToResourceFromEntity(result);
+
+        return Ok(suppliesRequestResource);
+
+    }
 } 
     
     

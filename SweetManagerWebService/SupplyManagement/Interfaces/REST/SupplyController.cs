@@ -5,93 +5,145 @@ using SweetManagerWebService.SupplyManagement.Domain.Services;
 using SweetManagerWebService.SupplyManagement.Interfaces.REST.Resources;
 using SweetManagerWebService.SupplyManagement.Interfaces.REST.Transform;
 
-namespace SweetManagerWebService.SupplyManagement.Interfaces.REST;
-
-
-[Route("api/[controller]")]
-[ApiController]
-[Produces(MediaTypeNames.Application.Json)]
-public class SupplyController : ControllerBase
+namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
 {
-    ISupplyQueryService _queryService;
-    ISupplyCommandService _commandService;
-
-    public SupplyController(ISupplyQueryService queryService, ISupplyCommandService commandService)
+    [Route("api/[controller]")]
+    [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    public class SupplyController : ControllerBase
     {
-        _queryService = queryService;
-        _commandService = commandService;
-    }
+        private readonly ISupplyQueryService _queryService;
+        private readonly ISupplyCommandService _commandService;
 
-    [HttpPost]
-    public async Task<IActionResult> CreateSupply([FromBody] CreateSupplyResource resource)
-    {
-        var result =
-            await _commandService.Handle(CreateSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
-        if (result is false)
+        public SupplyController(ISupplyQueryService queryService, ISupplyCommandService commandService)
         {
-            return BadRequest();
+            _queryService = queryService;
+            _commandService = commandService;
         }
 
-        return Ok(result);
-    }
-    
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateSupply(int id, [FromBody] UpdateSupplyResource resource)
-    {
-        // Validate that the provided resource is valid
-        if (!ModelState.IsValid)
+        [HttpPost]
+        public async Task<IActionResult> CreateSupply([FromBody] CreateSupplyResource resource)
         {
-            return BadRequest(ModelState);
+            try
+            {
+                var result = await _commandService.Handle(CreateSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
+                if (!result)
+                {
+                    return BadRequest("Failed to create supply.");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // The `id` is passed via the route, so we don't pass it in the body
-        var result = await _commandService.Handle(UpdateSupplyCommandFromResource.FromResource(id, resource));
-
-        if (!result)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSupply(int id, [FromBody] UpdateSupplyResource resource)
         {
-            return BadRequest("Failed to update supply.");
+            try
+            {
+                // Validate that the provided resource is valid
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                // The `id` is passed via the route, so we don't pass it in the body
+                var result = await _commandService.Handle(UpdateSupplyCommandFromResource.FromResource(id, resource));
+
+                if (!result)
+                {
+                    return BadRequest("Failed to update supply.");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        return Ok(result);
-    }
-
-    
-    [HttpDelete]
-    public async Task<IActionResult> DeleteSupply([FromBody] DeleteSupplyResource resource)
-    {
-        var result =
-            await _commandService.Handle(DeleteSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
-        if (result is false)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteSupply([FromBody] DeleteSupplyResource resource)
         {
-            return BadRequest();
+            try
+            {
+                var result = await _commandService.Handle(DeleteSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
+                if (!result)
+                {
+                    return BadRequest("Failed to delete supply.");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        return Ok(result);
-    }
-    
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetSupplyById([FromRoute] int id)
-    {
-        var result = await _queryService.Handle(new GetSupplyByIdQuery(id));
-        if (result is null)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSupplyById([FromRoute] int id)
         {
-            return BadRequest();
+            try
+            {
+                var result = await _queryService.Handle(new GetSupplyByIdQuery(id));
+                if (result == null)
+                {
+                    return NotFound($"Supply with ID {id} not found.");
+                }
+
+                var supplyResource = SupplyResourceFromEntityAssembler.ToResourceFromEntity(result);
+
+                return Ok(supplyResource);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-    
-        var supplyResource = SupplyResourceFromEntityAssembler.ToResourceFromEntity(result);
 
-        return Ok(supplyResource);
-    }
+        [HttpGet]
+        public async Task<IActionResult> GetAllSupplies()
+        {
+            try
+            {
+                var result = await _queryService.Handle(new GetAllSuppliesQuery());
 
-    
-    [HttpGet]
-    
-    public async Task<IActionResult> GetAllSupplies()
-    {
-        var result = await _queryService.Handle(new GetAllSuppliesQuery());
-        
-        var supplyResource = result.Select(SupplyResourceFromEntityAssembler.ToResourceFromEntity);
+                var supplyResource = result.Select(SupplyResourceFromEntityAssembler.ToResourceFromEntity);
 
-        return Ok(supplyResource);
+                return Ok(supplyResource);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("provider/{providerId}")]
+
+        public async Task<IActionResult> GetSupplyByProviderId([FromRoute] int providerId)
+        {
+            try
+            {
+                var result = await _queryService.Handle(new GetSupplyByProviderIdQuery(providerId));
+                if (result == null)
+                {
+                    return NotFound($"Supply with Provider ID {providerId} not found.");
+                }
+
+                var supplyResource = result.Select(SupplyResourceFromEntityAssembler.ToResourceFromEntity);
+
+                return Ok(supplyResource);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

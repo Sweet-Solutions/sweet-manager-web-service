@@ -19,4 +19,15 @@ public class SuppliesRequestQueryService(ISuppliesRequestRepository suppliesRequ
     {
         return await _suppliesRequestRepository.ListAsync();
     }
+    
+
+    public async Task<Domain.Model.Entities.SuppliesRequest?> Handle(GetSuppliesRequestByPaymentOwnerIdQuery query)
+    {
+        return await _suppliesRequestRepository.FindByPaymentOwnerId(query.PaymentOwnerId);
+    }
+
+    public async Task<Domain.Model.Entities.SuppliesRequest?> Handle(GetSuppliesRequestBySupplyIdQuery query)
+    {
+        return await _suppliesRequestRepository.FindBySupplyId(query.SupplyId);
+    }
 }
