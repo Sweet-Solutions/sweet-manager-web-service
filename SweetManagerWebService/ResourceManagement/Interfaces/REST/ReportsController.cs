@@ -15,22 +15,14 @@ namespace SweetManagerWebService.ResourceManagement.Interfaces.REST
         [HttpPost("create")]
         public async Task<IActionResult> CreateReport([FromBody] CreateReportResource resource)
         {
-            try
-            {
-                var result = await reportCommandService
-                    .Handle(CreateReportCommandFromResourceAssembler
-                        .ToCommandFromResource(resource));
+            var result = await reportCommandService
+                .Handle(CreateReportCommandFromResourceAssembler
+                    .ToCommandFromResource(resource));
 
-                if (result is false)
-                    return BadRequest("Error creating report.");
+            if (result is false)
+                return BadRequest("Error creating report.");
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (ex) details here for debugging
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error.");
-            }
+            return Ok(result);
         }
 
         [HttpGet]

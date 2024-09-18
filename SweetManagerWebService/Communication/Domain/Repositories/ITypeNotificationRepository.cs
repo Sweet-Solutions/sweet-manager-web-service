@@ -1,10 +1,9 @@
+using sweetmanager.API.Shared.Domain.Repositories;
 using SweetManagerWebService.Communication.Domain.Model.Entities;
 
 namespace SweetManagerWebService.Communication.Domain.Repositories
 {
-    public interface ITypeNotificationRepository
+    public interface ITypeNotificationRepository: IBaseRepository<TypeNotification>
     {
-        Task<IEnumerable<TypeNotification>> GetAllAsync();
-        Task<TypeNotification?> GetByIdAsync(int id);
     }
 }

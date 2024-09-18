@@ -16,12 +16,12 @@ namespace SweetManagerWebService.ResourceManagement.Application.QueryService
 
         public async Task<IEnumerable<TypeReport>> Handle(GetAllTypesReportsQuery query)
         {
-            return await _typeReportRepository.GetAllAsync();
+            return await _typeReportRepository.ListAsync();
         }
 
         public async Task<TypeReport?> Handle(GetTypeReportByIdQuery query)
         {
-            return await _typeReportRepository.GetByIdAsync(query.Id);
+            return await _typeReportRepository.FindByIdAsync(query.Id);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace SweetManagerWebService.Communication.Application.QueryService
 
         public async Task<IEnumerable<TypeNotification>> Handle(GetAllTypesNotificationsQuery query)
         {
-            return await _typeNotificationRepository.GetAllAsync();
+            return await _typeNotificationRepository.ListAsync();
         }
 
         public async Task<TypeNotification?> Handle(GetTypeNotificationByIdQuery query)
         {
-            return await _typeNotificationRepository.GetByIdAsync(query.Id);
+            return await _typeNotificationRepository.FindByIdAsync(query.Id);
         }
     }
 }
