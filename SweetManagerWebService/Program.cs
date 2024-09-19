@@ -28,6 +28,13 @@ using SweetManagerWebService.Commerce.Domain.Services.Subscriptions;
 using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Contracts;
 using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Payments;
 using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Subscriptions;
+using SweetManagerWebService.Communication.Application.CommandService;
+using SweetManagerWebService.Communication.Application.QueryService;
+using SweetManagerWebService.Communication.Domain.Repositories;
+using SweetManagerWebService.Communication.Domain.Services.Notification;
+using SweetManagerWebService.Communication.Domain.Services.TypeNotification;
+using SweetManagerWebService.Communication.Infrastructure.Persistence.EFC.Repositories;
+using SweetManagerWebService.Communication.Infrastructure.Population.TypeNotifications;
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.Assignments;
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.Credential;
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.Roles;
@@ -67,6 +74,20 @@ using SweetManagerWebService.Monitoring.Domain.Services.TypeRoom;
 using SweetManagerWebService.Monitoring.Infrastructure.Persistence.EFC.Repositories;
 using SweetManagerWebService.Monitoring.Interfaces.ACL;
 using SweetManagerWebService.Monitoring.Interfaces.ACL.Services;
+using SweetManagerWebService.Profiles.Application.Internal.CommandService;
+using SweetManagerWebService.Profiles.Application.Internal.QueryService;
+using SweetManagerWebService.Profiles.Domain.Repositories;
+using SweetManagerWebService.Profiles.Domain.Services.Customer;
+using SweetManagerWebService.Profiles.Domain.Services.Hotel;
+using SweetManagerWebService.Profiles.Domain.Services.Provider;
+using SweetManagerWebService.Profiles.Infrastructure.Persistence.EFC.Repositories;
+using SweetManagerWebService.ResourceManagement.Application.CommandService;
+using SweetManagerWebService.ResourceManagement.Application.QueryService;
+using SweetManagerWebService.ResourceManagement.Domain.Repositories;
+using SweetManagerWebService.ResourceManagement.Domain.Services.Report;
+using SweetManagerWebService.ResourceManagement.Domain.Services.TypeReport;
+using SweetManagerWebService.ResourceManagement.Infrastructure.Persistence.EFC.Repositories;
+using SweetManagerWebService.ResourceManagement.Infrastructure.Population.TypeReports;
 using SweetManagerWebService.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -209,6 +230,8 @@ builder.Services.AddScoped<IAssignmentWorkerRepository, AssignmentWorkerReposito
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// Monitoring Bounded Context
+
 builder.Services.AddScoped<IBookingCommandService, BookingCommandService>();
 builder.Services.AddScoped<IBookingQueryService, BookingQueryService>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
@@ -241,6 +264,52 @@ builder.Services.AddScoped<IPaymentOwnerQueryService, PaymentOwnerQueryService>(
 
 builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
 builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>();
+
+// SUPPLY MANAGEMENT BOUNDED CONTEXT
+builder.Services.AddScoped<ISupplyRepository, SupplyRepository>(); 
+builder.Services.AddScoped<ISupplyCommandService, SupplyCommandService>();
+builder.Services.AddScoped<ISupplyQueryService, SupplyQueryService>();
+
+builder.Services.AddScoped<ISuppliesRequestCommandService, SuppliesRequestCommandService>(); 
+builder.Services.AddScoped<ISuppliesRequestQueryService, SuppliesRequestQueryService>();
+builder.Services.AddScoped<ISuppliesRequestRepository, SuppliesRequestRepository>();
+builder.Services.AddScoped<ISupplyCommandService, SupplyCommandService>();
+builder.Services.AddScoped<ISupplyQueryService, SupplyQueryService>();
+
+// RESOURCE MANAGEMENT BOUNDED CONTEXT
+
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<ITypeReportRepository, TypeReportRepository>();
+builder.Services.AddScoped<IReportCommandService, ReportCommandService>();
+builder.Services.AddScoped<IReportQueryService, ReportQueryService>();
+builder.Services.AddScoped<ITypeReportQueryService, TypeReportQueryService>();
+builder.Services.AddScoped<ITypeReportCommandService, TypeReportCommandService>();
+
+builder.Services.AddScoped<TypeReportsInitializer>();
+
+// COMMUNICATION BOUNDED CONTEXT
+
+builder.Services.AddScoped<ITypeNotificationRepository, TypeNotificationRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationCommandService, NotificationCommandService>();
+builder.Services.AddScoped<ITypeNotificationQueryService, TypeNotificationQueryService>();
+builder.Services.AddScoped<INotificationQueryService, NotificationQueryService>();
+builder.Services.AddScoped<ITypeNotificationCommandService, TypeNotificationCommandService>();
+
+builder.Services.AddScoped<TypeNotificationsInitializer>();
+
+// PROFILES BOUNDED CONTEXT
+
+builder.Services.AddScoped<ICustomerCommandService, CustomerCommandService>();
+builder.Services.AddScoped<ICustomerQueryService, CustomerQueryService>();
+builder.Services.AddScoped<IHotelCommandService, HotelCommandService>();
+builder.Services.AddScoped<IHotelQueryService, HotelQueryService>();
+builder.Services.AddScoped<IProviderCommandService, ProviderCommandService>();
+builder.Services.AddScoped<IProviderQueryService, ProviderQueryService>();
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IProviderRepository, ProviderRepository>();
+builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 
 #endregion 
 
@@ -305,9 +374,13 @@ using (var scope = app.Services.CreateScope())
 #region Run DatabaseInitializer
 using (var scope = app.Services.CreateScope())
 {
-    var initializer = scope.ServiceProvider.GetRequiredService<RolesInitializer>();
+    var roleInitializer = scope.ServiceProvider.GetRequiredService<RolesInitializer>();
 
-    initializer.InitializeAsync().Wait();
+    var typeReportInitializer = scope.ServiceProvider.GetRequiredService<TypeReportsInitializer>();
+    
+    roleInitializer.InitializeAsync().Wait();
+
+    typeReportInitializer.InitializeAsync().Wait();
 }
 #endregion
 
@@ -331,8 +404,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-
 
 app.MapControllers();
 
