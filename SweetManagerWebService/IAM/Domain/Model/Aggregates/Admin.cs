@@ -6,18 +6,27 @@ using SweetManagerWebService.ResourceManagement.Domain.Model.Aggregates;
 
 namespace SweetManagerWebService.IAM.Domain.Model.Aggregates
 {
-    public partial class Admin
+    public partial class Admin(int id, string username, string email, int rolesId, 
+        string name, string surname, int phone, string state)
     {
-        public int Id { get; set; }
-        public int RolesId { get; set; }
-        public string Username { get; set; } = null!;
-        public string Name { get; set; } = null!;
-        public string Surname { get; set; } = null!;
-        public int Phone { get; set; }
-        public string Email { get; set; } = null!;
-        public string State { get; set; } = null!;
+        public int Id { get; private set; } = id;
+
+        public int RolesId { get; private set; } = rolesId;
+        
+        public string Username { get; private set; } = username;
+        
+        public string Name { get; private set; } = name.ToUpper();
+        
+        public string Surname { get; private set; } = surname.ToUpper();
+
+        public string Email { get; private set; } = email;
+
+        public int Phone { get; private set; } = phone;
+        
+        public string State { get; private set; } = state.ToUpper();
 
         public virtual AdminCredential? AdminCredential { get; }
+        
         public virtual Role Role { get; } = null!;
 
         public virtual ICollection<AssignmentWorker> AssignmentsWorkers { get; } = [];
