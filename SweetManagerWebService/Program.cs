@@ -4,6 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using sweetmanager.API.Shared.Domain.Repositories;
+
+using SweetManagerWebService.Shared.Infrastructure.Interfaces.ASP.Configuration;
+using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
+using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Repositories;
+using SweetManagerWebService.SupplyManagement.Application.Internal.SuppliesRequest;
+using SweetManagerWebService.SupplyManagement.Application.Internal.Supply;
+using SweetManagerWebService.SupplyManagement.Domain.Repositories;
+using SweetManagerWebService.SupplyManagement.Domain.Services;
+using SweetManagerWebService.SupplyManagement.Infrastructure.Persistence.Repositories;
 using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Contracts;
 using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Payments;
 using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Subscriptions;
@@ -74,6 +83,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
+
 #region Database Configuration
 // Add Database Connection
 var connectionString = builder.Configuration.GetConnectionString("SweetManager");
@@ -98,7 +108,7 @@ builder.Services.AddDbContext<SweetManagerContext>(
             else if (builder.Environment.IsProduction())
                 options.UseMySQL(connectionString)
                     .LogTo(Console.WriteLine, LogLevel.Error)
-                    .EnableDetailedErrors();    
+                    .EnableDetailedErrors();
     });
 
 #endregion
