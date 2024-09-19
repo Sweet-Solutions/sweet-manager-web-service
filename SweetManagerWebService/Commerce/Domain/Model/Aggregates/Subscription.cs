@@ -2,13 +2,13 @@
 
 namespace SweetManagerWebService.Commerce.Domain.Model.Aggregates
 {
-    public partial class Subscription
+    public partial class Subscription(string name, string description, decimal price, string state)
     {
         public int Id { get; }
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public decimal Price { get; set; }
-        public string State { get; set; } = null!;
+        public string Name { get; private set; } = name;
+        public string Description { get; private set; } = description;
+        public decimal Price { get; private set; } = price;
+        public string State { get; private set; } = state;
 
         public virtual ICollection<ContractOwner> ContractsOwners { get; } = [];
     }
