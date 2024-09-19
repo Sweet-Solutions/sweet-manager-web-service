@@ -5,5 +5,7 @@ namespace SweetManagerWebService.ResourceManagement.Domain.Repositories
 {
     public interface ITypeReportRepository : IBaseRepository<TypeReport>
     {
+        Task<bool> FindByNameAsync(string name);
+        
     }
 }
