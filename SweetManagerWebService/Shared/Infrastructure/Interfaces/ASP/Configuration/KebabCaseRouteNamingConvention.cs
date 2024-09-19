@@ -7,8 +7,9 @@ namespace SweetManagerWebService.Shared.Infrastructure.Interfaces.ASP.Configurat
     {
         private static AttributeRouteModel? ReplaceControllerTemplate(SelectorModel selector, string name)
         {
-            return selector.AttributeRouteModel != null 
-                ? new AttributeRouteModel { Template = selector.AttributeRouteModel.Template?.Replace("[controller]", name.ToKebabCase()) } 
+            return selector.AttributeRouteModel != null
+                ? new AttributeRouteModel
+                    { Template = selector.AttributeRouteModel.Template?.Replace("[controller]", name.ToKebabCase()) }
                 : null;
         }
         public void Apply(ControllerModel controller)
