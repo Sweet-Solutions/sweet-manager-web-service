@@ -5,5 +5,7 @@ namespace SweetManagerWebService.Communication.Domain.Repositories
 {
     public interface ITypeNotificationRepository: IBaseRepository<TypeNotification>
     {
+        Task<bool> FindByNameAsync(string name);
+        
     }
 }
