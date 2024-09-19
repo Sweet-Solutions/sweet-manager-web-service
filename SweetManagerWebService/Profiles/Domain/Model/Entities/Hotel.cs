@@ -1,5 +1,6 @@
 ﻿using SweetManagerWebService.IAM.Domain.Model.Aggregates;
 using SweetManagerWebService.Monitoring.Domain.Model.Aggregates;
+using SweetManagerWebService.Profiles.Domain.Model.Commands.Hotel;
 
 namespace SweetManagerWebService.Profiles.Domain.Model.Entities
 {
@@ -16,5 +17,45 @@ namespace SweetManagerWebService.Profiles.Domain.Model.Entities
         public virtual Owner Owner { get; } = null!;
 
         public virtual ICollection<Room> Rooms { get; } = [];
+
+
+        public Hotel()
+        {
+            this.OwnersId = 0;
+            this.Name = string.Empty;
+            this.Description = string.Empty;
+            this.Address = string.Empty;
+            this.Phone = 0;
+            this.Email = string.Empty;
+        }
+
+        public Hotel(int ownerId, string name, string description, string address, int phone, string email)
+        {
+            this.OwnersId = ownerId;
+            this.Name = name;
+            this.Description = description;
+            this.Address = address;
+            this.Phone = phone;
+            this.Email = email;
+        }
+
+        public Hotel(CreateHotelCommand command)
+        {
+         this.OwnersId = command.OwnersId;
+         this.Name = command.Name;
+         this.Description = command.Description;
+         this.Address = command.Address;
+         this.Phone = command.Phone;
+         this.Email = command.Email;
+        }
+
+        public Hotel(UpdateHotelCommand command)
+        {
+            this.OwnersId = command.Id;
+            this.Name = command.Name;
+            this.Phone = command.Phone;
+            this.Email = command.Email;
+        }
+        
     }
 }
