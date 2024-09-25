@@ -17,9 +17,8 @@ public class TypeNotificationsInitializer(ITypeNotificationCommandService typeNo
         if (!result.Any())
         {
             // Prepopulate the empty table
-            
-            await typeNotificationCommandService.Handle(new SeedTypeNotificationsCommand());
 
+            await typeNotificationCommandService.Handle(new SeedTypeNotificationsCommand());
         }
     }
 }

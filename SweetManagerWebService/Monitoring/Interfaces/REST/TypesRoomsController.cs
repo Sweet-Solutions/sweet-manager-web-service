@@ -10,10 +10,9 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
     [ApiController]
     public class TypesRoomsController
         (ITypeRoomCommandService typeRoomCommandService,
-        ITypeRoomQueryService typeRoomQueryService) :
-        ControllerBase
+        ITypeRoomQueryService typeRoomQueryService) : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("create-type-room")]
         public async Task<IActionResult> CreateTypeRoom
             ([FromBody] CreateTypeRoomResource resource)
         {
@@ -27,11 +26,11 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AllTypesRooms()
+        [HttpGet("get-all-type-rooms")]
+        public async Task<IActionResult> AllTypesRooms([FromQuery] int hotelId)
         {
             var typesRooms = await typeRoomQueryService
-                .Handle(new GetAllTypesRoomsQuery());
+                .Handle(new GetAllTypesRoomsQuery(hotelId));
 
             var typesRoomsResource = typesRooms.Select
                 (TypeRoomResourceFromEntityAssembler
@@ -40,7 +39,7 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(typesRoomsResource);
         }
 
-        [HttpGet]
+        [HttpGet("get-type-room-by-id")]
         public async Task<IActionResult> TypeRoomById
             ([FromQuery] int id)
         {

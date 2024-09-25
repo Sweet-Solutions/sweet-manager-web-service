@@ -18,6 +18,16 @@ namespace SweetManagerWebService.IAM.Domain.Model.Entities.Assignments
         public virtual Worker Worker { get; } = null!;
         public virtual WorkerArea WorkerArea { get; } = null!;
 
+        public AssignmentWorker(int workersAreasId, int? workersId, int? adminsId, DateTime startDate, DateTime finalDate, string state) 
+        {
+            WorkersAreasId = workersAreasId;
+            WorkersId = workersId;
+            AdminsId = adminsId;
+            StartDate = startDate;
+            FinalDate = finalDate;
+            State = state;
+        }
+        
         public AssignmentWorker(CreateAssignmentWorkerCommand command)
         {
             WorkersAreasId = command.WorkersAreasId;
@@ -25,7 +35,7 @@ namespace SweetManagerWebService.IAM.Domain.Model.Entities.Assignments
             AdminsId = command.WorkersId;
             StartDate = command.StartDate;
             FinalDate = command.FinalDate;
-            State = command.State;
+            State = command.State.ToUpper();
         }
         
         public AssignmentWorker() { }

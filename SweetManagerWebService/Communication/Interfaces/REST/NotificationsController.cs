@@ -10,17 +10,10 @@ namespace SweetManagerWebService.Communication.Interfaces.REST
     [Route("api/[controller]")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
-    public class NotificationsController : ControllerBase
+    public class NotificationsController(
+        INotificationCommandService notificationCommandService, 
+        INotificationQueryService notificationQueryService) : ControllerBase
     {
-        private readonly INotificationCommandService _notificationCommandService;
-        private readonly INotificationQueryService _notificationQueryService;
-
-        public NotificationsController(INotificationCommandService notificationCommandService, INotificationQueryService notificationQueryService)
-        {
-            _notificationCommandService = notificationCommandService;
-            _notificationQueryService = notificationQueryService;
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationResource resource)
         {
@@ -29,7 +22,7 @@ namespace SweetManagerWebService.Communication.Interfaces.REST
                 return BadRequest(ModelState);
             }
 
-            var result = await _notificationCommandService.Handle(CreateNotificationCommandFromResourceAssembler.ToCommandFromResource(resource));
+            var result = await notificationCommandService.Handle(CreateNotificationCommandFromResourceAssembler.ToCommandFromResource(resource));
 
             if (result is false)
                 return BadRequest();
@@ -37,18 +30,18 @@ namespace SweetManagerWebService.Communication.Interfaces.REST
             return Ok(result);
         }
         
-        [HttpGet]
-        public async Task<IActionResult> AllNotifications()
+        [HttpGet("get-all-notifications")]
+        public async Task<IActionResult> AllNotifications([FromQuery] int hotelId)
         {
-            var notifications = await _notificationQueryService.Handle(new GetAllNotificationsQuery());
+            var notifications = await notificationQueryService.Handle(new GetAllNotificationsQuery(hotelId));
 
             var notificationsResource = notifications.Select(NotificationResourceFromEntityAssembler.ToResourceFromEntity);
 
             return Ok(notificationsResource);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> NotificationById(int id)
+        [HttpGet("get-notification-by-id")]
+        public async Task<IActionResult> NotificationById([FromQuery] int id)
         {
             if (id <= 0)
             {
@@ -57,7 +50,7 @@ namespace SweetManagerWebService.Communication.Interfaces.REST
 
             try
             {
-                var notification = await _notificationQueryService.Handle(new GetNotificationByIdQuery(id));
+                var notification = await notificationQueryService.Handle(new GetNotificationByIdQuery(id));
 
                 if (notification is null)
                 {

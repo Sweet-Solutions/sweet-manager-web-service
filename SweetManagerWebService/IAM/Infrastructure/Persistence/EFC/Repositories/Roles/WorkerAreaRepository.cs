@@ -18,10 +18,10 @@ public class WorkerAreaRepository(SweetManagerContext context) : BaseRepository<
                 on wa.Id equals aw.WorkersAreasId
             join ad in Context.Set<Admin>().ToList()
                 on aw.AdminsId equals ad.Id
-            join nt in Context.Set<Notification>().ToList()
-                on ad.Id equals nt.AdminsId
+            join ro in Context.Set<Role>().ToList()
+                on ad.RolesId equals ro.Id
             join ow in Context.Set<Owner>().ToList()
-                on nt.OwnersId equals ow.Id
+                on ro.Id equals ow.RolesId
             join ho in Context.Set<Hotel>().ToList()
                 on ow.Id equals ho.OwnersId
             where ho.Id.Equals(hotelId)

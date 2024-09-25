@@ -377,10 +377,14 @@ using (var scope = app.Services.CreateScope())
     var roleInitializer = scope.ServiceProvider.GetRequiredService<RolesInitializer>();
 
     var typeReportInitializer = scope.ServiceProvider.GetRequiredService<TypeReportsInitializer>();
+
+    var notificationInitializer = scope.ServiceProvider.GetRequiredService<TypeNotificationsInitializer>();
     
     roleInitializer.InitializeAsync().Wait();
 
     typeReportInitializer.InitializeAsync().Wait();
+
+    notificationInitializer.InitializeAsync().Wait();
 }
 #endregion
 

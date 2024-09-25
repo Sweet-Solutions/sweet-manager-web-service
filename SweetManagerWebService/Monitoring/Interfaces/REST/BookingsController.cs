@@ -12,12 +12,10 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
     [Produces(MediaTypeNames.Application.Json)]
     public class BookingsController
         (IBookingCommandService bookingCommandService,
-        IBookingQueryService bookingQueryService) :
-        ControllerBase
+        IBookingQueryService bookingQueryService) : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> CreateBooking
-            ([FromBody] CreateBookingResource resource)
+        [HttpPost("create-booking")]
+        public async Task<IActionResult> CreateBooking([FromBody] CreateBookingResource resource)
         {
             var result = await bookingCommandService
                 .Handle(CreateBookingCommandFromResourceAssembler
@@ -29,9 +27,8 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateBookingState
-            ([FromBody] UpdateBookingStateResource resource)
+        [HttpPost("update-booking-state")]
+        public async Task<IActionResult> UpdateBookingState([FromBody] UpdateBookingStateResource resource)
         {
             var result = await bookingCommandService
                 .Handle(UpdateBookingCommandFromResourceAssembler
@@ -43,7 +40,7 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("get-all-bookings")]
         public async Task<IActionResult> AllBookings()
         {
             var bookings = await bookingQueryService
@@ -56,9 +53,8 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(bookingsResource);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> BookingById
-            ([FromQuery] int id)
+        [HttpGet("get-booking-id")]
+        public async Task<IActionResult> BookingById([FromQuery] int id)
         {
             var booking = await bookingQueryService
                 .Handle(new GetBookingByIdQuery(id));

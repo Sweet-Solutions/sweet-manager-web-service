@@ -6,7 +6,7 @@ namespace SweetManagerWebService.IAM.Domain.Model.Entities.Roles
     {
         public int Id { get; }
 
-        public string Name { get; set; } = name;
+        public string Name { get; set; } = name.ToUpper();
 
         public virtual ICollection<AssignmentWorker> AssignmentsWorkers { get; } = [];
     }

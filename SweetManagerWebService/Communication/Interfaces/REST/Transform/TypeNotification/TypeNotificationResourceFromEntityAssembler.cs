@@ -1,4 +1,5 @@
-using SweetManagerWebService.Communication.Interfaces.REST.Transform.Resources.TypeNotification;
+
+using SweetManagerWebService.Communication.Interfaces.REST.Resources.TypeNotification;
 
 namespace SweetManagerWebService.Communication.Interfaces.REST.Transform.TypeNotification
 {

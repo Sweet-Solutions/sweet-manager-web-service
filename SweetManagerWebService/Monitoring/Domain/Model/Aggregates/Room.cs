@@ -23,9 +23,7 @@ namespace SweetManagerWebService.Monitoring.Domain.Model.Aggregates
             this.HotelsId = 0;
             this.State = string.Empty;
         }
-        public Room
-            (int typeRoomId, int hotelId,
-            ERoomState roomState)
+        public Room(int typeRoomId, int hotelId, ERoomState roomState)
         {
             this.TypesRoomsId = typeRoomId;
             this.HotelsId = hotelId;

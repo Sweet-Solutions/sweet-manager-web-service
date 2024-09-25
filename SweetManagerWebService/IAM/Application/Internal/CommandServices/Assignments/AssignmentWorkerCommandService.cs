@@ -13,8 +13,17 @@ public class AssignmentWorkerCommandService(IAssignmentWorkerRepository assignme
     {
         try
         {
-            await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command));
-
+            if (command.WorkersId is 0)
+            {
+                await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersAreasId,
+                    null, command.AdminsId, command.StartDate, command.FinalDate, command.State));
+            }
+            else
+            {
+                await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersId,
+                    command.WorkersAreasId, null, command.StartDate, command.FinalDate, command.State));
+            }
+            
             await unitOfWork.CompleteAsync();
 
             return true;

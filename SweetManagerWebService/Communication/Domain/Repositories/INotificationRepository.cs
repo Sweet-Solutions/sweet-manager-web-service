@@ -5,5 +5,8 @@ namespace SweetManagerWebService.Communication.Domain.Repositories;
 
 public interface INotificationRepository : IBaseRepository<Notification>
 {
-    Task<IEnumerable<Notification>> FindByTypeNotificationIdAsync(int typeNotificationId, int HotelId);
+    Task<IEnumerable<Notification>> FindByTypeNotificationIdAsync(int typeNotificationId);
+
+    Task<IEnumerable<Notification>> FindAllByHotelIdAsync(int hotelId);
+
 }

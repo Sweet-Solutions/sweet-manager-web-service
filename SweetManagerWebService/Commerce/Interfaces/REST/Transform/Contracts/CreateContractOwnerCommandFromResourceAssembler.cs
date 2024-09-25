@@ -7,11 +7,7 @@ public static class CreateContractOwnerCommandFromResourceAssembler
 {
     public static CreateContractOwnerCommand ToCommandFromResource(CreateContractOwnerResource resource)
     {
-        var startDate = DateTime.Parse(resource.StartDate);
-
-        var finalDate = DateTime.Parse(resource.FinalDate);
-
-        return new CreateContractOwnerCommand(resource.SubscriptionId, resource.OwnersId, startDate, finalDate,
+        return new CreateContractOwnerCommand(resource.SubscriptionId, resource.OwnersId, 
             resource.State);
     }
 }

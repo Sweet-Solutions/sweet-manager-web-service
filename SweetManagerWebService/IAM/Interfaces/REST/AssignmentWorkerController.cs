@@ -34,7 +34,7 @@ public class AssignmentWorkerController(IAssignmentWorkerCommandService assignme
         }
     }
 
-    [HttpGet("get-assignment-worker")]
+    [HttpGet("get-assignment-by-worker-id")]
     [Authorize]
     public async Task<IActionResult> GetAssignmentWorkersByWorkerId([FromQuery] int id)
     {
@@ -57,7 +57,7 @@ public class AssignmentWorkerController(IAssignmentWorkerCommandService assignme
         }
     }
 
-    [HttpGet("get-all-assignments-admin")]
+    [HttpGet("get-all-assignments-by-admin-id")]
     [Authorize]
     public async Task<IActionResult> GetAssignmentWorkersByAdminId([FromQuery]int id)
     {
@@ -77,7 +77,7 @@ public class AssignmentWorkerController(IAssignmentWorkerCommandService assignme
         }
     }
 
-    [HttpGet("get-assignments-workers-area")]
+    [HttpGet("get-assignments-by-workers-area-id")]
     [Authorize]
     public async Task<IActionResult> GetAssignmentWorkersByWorkerAreaId([FromQuery] int id)
     {

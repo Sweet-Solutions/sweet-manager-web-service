@@ -12,13 +12,13 @@ namespace SweetManagerWebService.Commerce.Domain.Model.Entities.Contracts
         public DateTime FinalDate { get; private set; } 
         public string State { get; private set; } 
 
-        public ContractOwner(int subscriptionId, int ownersId, DateTime startDate, DateTime finalDate, string state)
+        public ContractOwner(int subscriptionId, int ownersId, string state)
         {
             SubscriptionsId = subscriptionId;
             OwnersId = ownersId;
-            StartDate = startDate;
-            FinalDate = finalDate;
-            State = state;
+            StartDate = DateTime.Now;
+            FinalDate = DateTime.Now.AddMonths(1);
+            State = state.ToUpper();
         }
         
         public ContractOwner()

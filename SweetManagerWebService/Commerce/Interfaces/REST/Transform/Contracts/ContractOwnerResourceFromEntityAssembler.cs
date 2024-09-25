@@ -7,7 +7,6 @@ public static class ContractOwnerResourceFromEntityAssembler
 {
     public static ContractOwnerResource ToResourceFromEntity(ContractOwner entity)
     {
-        return new ContractOwnerResource(entity.Id, entity.SubscriptionsId, entity.OwnersId, entity.StartDate,
-            entity.FinalDate, entity.State);
+        return new ContractOwnerResource(entity.Id, entity.SubscriptionsId, entity.OwnersId, entity.StartDate, entity.FinalDate, entity.State);
     }
 }

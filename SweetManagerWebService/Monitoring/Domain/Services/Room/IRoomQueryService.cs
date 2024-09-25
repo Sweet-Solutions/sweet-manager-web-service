@@ -12,5 +12,6 @@ namespace SweetManagerWebService.Monitoring.Domain.Services.Room
 
         Task<IEnumerable<Model.Aggregates.Room>> Handle
             (GetRoomsByTypeRoomIdQuery query);
+        
     }
 }

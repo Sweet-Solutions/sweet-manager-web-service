@@ -7,10 +7,10 @@ namespace SweetManagerWebService.Monitoring.Domain.Repositories
     public interface IRoomRepository :
         IBaseRepository<Room>
     {
-        Task<bool> UpdateRoomStateAsync
-            (int id, ERoomState roomState);
+        Task<bool> UpdateRoomStateAsync(int id, ERoomState roomState);
 
-        Task<IEnumerable<Room>> FindByTypeRoomIdAsync
-            (int typeRoomId);
+        Task<IEnumerable<Room>> FindByTypeRoomIdAsync(int typeRoomId);
+
+        Task<IEnumerable<Room>> FindAllByHotelId(int hotelId);
     }
 }

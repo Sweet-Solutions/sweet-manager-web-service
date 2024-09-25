@@ -52,7 +52,7 @@ public class WorkerAreaController(IWorkerAreaCommandService workerAreaCommandSer
         }
     }
 
-    [HttpGet("get-worker-area-name")]
+    [HttpGet("get-worker-area-by-name")]
     [Authorize]
     public async Task<IActionResult> GetWorkerAreaByName([FromBody] SearchingQueriesForName resource)
     {

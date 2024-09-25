@@ -9,7 +9,7 @@ public class NotificationQueryService(INotificationRepository notificationReposi
 {
     public async Task<IEnumerable<Notification>> Handle(GetAllNotificationsQuery query)
     {
-        return await notificationRepository.ListAsync();
+        return await notificationRepository.FindAllByHotelIdAsync(query.HotelId);
     }
 
     public async Task<Notification?> Handle(GetNotificationByIdQuery query)

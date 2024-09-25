@@ -14,7 +14,7 @@ public class ContractOwnerCommandService(IContractOwnerRepository contractOwnerR
         try
         {
             await contractOwnerRepository.AddAsync(
-                new ContractOwner(command.SubscriptionId, command.OwnersId, command.StartDate, command.FinalDate, command.State));
+                new ContractOwner(command.SubscriptionId, command.OwnersId, command.State));
 
             await unitOfWork.CompleteAsync();
             

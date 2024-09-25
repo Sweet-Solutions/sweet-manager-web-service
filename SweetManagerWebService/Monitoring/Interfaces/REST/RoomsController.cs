@@ -12,12 +12,10 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
     [Produces(MediaTypeNames.Application.Json)]
     public class RoomsController
         (IRoomCommandService roomCommandService,
-        IRoomQueryService roomQueryService) :
-        ControllerBase
+        IRoomQueryService roomQueryService) : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> CreateRoom
-            ([FromBody] CreateRoomResource resource)
+        [HttpPost("create-room")]
+        public async Task<IActionResult> CreateRoom([FromBody] CreateRoomResource resource)
         {
             var result = await roomCommandService.Handle
                 (CreateRoomCommandFromResourceAssembler
@@ -29,9 +27,8 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateRoomState
-            ([FromBody] UpdateRoomStateResource resource)
+        [HttpPut("update-room-state")]
+        public async Task<IActionResult> UpdateRoomState([FromBody] UpdateRoomStateResource resource)
         {
             var result = await roomCommandService.Handle
                 (UpdateRoomStateCommandFromResourceAssembler
@@ -43,11 +40,11 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AllRooms()
+        [HttpGet("get-all-rooms")]
+        public async Task<IActionResult> AllRooms([FromQuery] int hotelId)
         {
             var rooms = await roomQueryService
-                .Handle(new GetAllRoomsQuery());
+                .Handle(new GetAllRoomsQuery(hotelId));
 
             var roomsResource = rooms.Select
                 (RoomResourceFromEntityAssembler
@@ -56,9 +53,8 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(roomsResource);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> RoomById
-            ([FromQuery] int  id)
+        [HttpGet("get-room-by-id")]
+        public async Task<IActionResult> RoomById([FromQuery] int  id)
         {
             var room = await roomQueryService
                 .Handle(new GetRoomByIdQuery(id));
@@ -72,9 +68,8 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(roomResource);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> RoomsByTypeRoomId
-            ([FromQuery] int typeRoomId)
+        [HttpGet("get-room-by-type")]
+        public async Task<IActionResult> RoomsByTypeRoomId([FromQuery] int typeRoomId)
         {
             var rooms = await roomQueryService
                 .Handle(new GetRoomsByTypeRoomIdQuery
