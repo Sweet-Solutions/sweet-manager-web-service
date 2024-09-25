@@ -12,13 +12,13 @@ namespace SweetManagerWebService.IAM.Infrastructure.Persistence.EFC.Repositories
 public class AssignmentWorkerRepository(SweetManagerContext context) : BaseRepository<AssignmentWorker>(context), IAssignmentWorkerRepository
 {
 
-    public async Task<AssignmentWorker?> FindByWorkerIdAsync(int workerId)
+    public async Task<IEnumerable<AssignmentWorker>> FindByWorkerIdAsync(int workerId)
         => await Task.Run(() => (
             from aw in Context.Set<AssignmentWorker>().ToList()
             join wk in Context.Set<Worker>().ToList() on aw.WorkersId equals wk.Id
             where wk.Id.Equals(workerId)
             select aw
-        ).FirstOrDefault());
+        ).ToList());
 
     public async Task<IEnumerable<AssignmentWorker>> FindByAdminIdAsync(int adminId)
         => await Task.Run(() => (

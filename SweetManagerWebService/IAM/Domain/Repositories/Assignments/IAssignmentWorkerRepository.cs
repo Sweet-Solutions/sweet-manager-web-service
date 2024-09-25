@@ -6,7 +6,7 @@ namespace SweetManagerWebService.IAM.Domain.Repositories.Assignments;
 public interface IAssignmentWorkerRepository : IBaseRepository<AssignmentWorker>
 {
     
-    Task<AssignmentWorker?> FindByWorkerIdAsync(int workerId);
+    Task<IEnumerable<AssignmentWorker>> FindByWorkerIdAsync(int workerId);
 
     Task<IEnumerable<AssignmentWorker>> FindByAdminIdAsync(int adminId);
 

@@ -5,7 +5,8 @@ using SweetManagerWebService.Profiles.Domain.Services.Provider;
 
 namespace SweetManagerWebService.Profiles.Application.Internal.QueryService;
 
-public class ProviderQueryService (IProviderRepository providerRepository) : IProviderQueryService
+public class ProviderQueryService(IProviderRepository providerRepository) : IProviderQueryService
 {
-    public async Task<IEnumerable<Provider>> Handle(GetAllProvidersQuery query) => await providerRepository.ListAsync();
+    public async Task<IEnumerable<Provider>> Handle(GetAllProvidersQuery query) => await providerRepository.FindProviderByHotelIdAsync(query.HotelId);
+    
 }

@@ -24,7 +24,7 @@ namespace SweetManagerWebService.Profiles.Interfaces.REST
             _providerQueryService = providerQueryService;
         }
 
-        [HttpPost("create")]
+        [HttpPost("create-provider")]
         public async Task<IActionResult> CreateProvider([FromBody] CreateProviderResource resource)
         {
             var result = await _providerCommandService
@@ -35,7 +35,7 @@ namespace SweetManagerWebService.Profiles.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update-provider")]
         public async Task<IActionResult> UpdateProvider([FromBody] UpdateProviderResource resource)
         {
             var result = await _providerCommandService
@@ -46,11 +46,11 @@ namespace SweetManagerWebService.Profiles.Interfaces.REST
             return Ok(result);
         }
         
-        [HttpGet("all")]
-        public async Task<IActionResult> AllProviders()
+        [HttpGet("get-all/{hotelId:int}")]
+        public async Task<IActionResult> AllProviders(int hotelId)
         {
             var providers = await _providerQueryService
-                .Handle(new GetAllProvidersQuery());
+                .Handle(new GetAllProvidersQuery(hotelId));
 
             var providerResource = providers.Select
                 (ProviderResourceFromEntityAssembler

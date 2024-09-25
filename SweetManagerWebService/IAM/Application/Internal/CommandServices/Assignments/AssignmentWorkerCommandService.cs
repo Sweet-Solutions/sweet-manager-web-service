@@ -13,6 +13,22 @@ public class AssignmentWorkerCommandService(IAssignmentWorkerRepository assignme
     {
         try
         {
+
+            var verificationWorkerId = await assignmentWorkerRepository.FindByWorkerIdAsync(command.WorkersId);
+            
+            if (!verificationWorkerId.Any())
+                throw new Exception($"There's no Assignment with the given worker id: {command.WorkersId}");
+
+            verificationWorkerId = await assignmentWorkerRepository.FindByAdminIdAsync(command.AdminsId);
+            
+            if (!verificationWorkerId.Any())
+                throw new Exception($"There's no Assignment with the given admin id: {command.AdminsId}");
+
+            verificationWorkerId = await assignmentWorkerRepository.FindByWorkerAreaIdAsync(command.WorkersAreasId);
+
+            if (verificationWorkerId.Any())
+                throw new Exception($"There's no Assignment with the given worker area id: {command.WorkersAreasId}");
+            
             if (command.WorkersId is 0)
             {
                 await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersAreasId,
@@ -20,8 +36,8 @@ public class AssignmentWorkerCommandService(IAssignmentWorkerRepository assignme
             }
             else
             {
-                await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersId,
-                    command.WorkersAreasId, null, command.StartDate, command.FinalDate, command.State));
+                await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersAreasId,
+                    command.WorkersId, null, command.StartDate, command.FinalDate, command.State));
             }
             
             await unitOfWork.CompleteAsync();

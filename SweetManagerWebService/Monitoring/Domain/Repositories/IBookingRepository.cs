@@ -9,5 +9,8 @@ namespace SweetManagerWebService.Monitoring.Domain.Repositories
     {
         Task<bool> UpdateBookingStateAsync
             (int id, EBookingState bookingState);
+
+        Task<IEnumerable<Booking>> FindAllByHotelIdAsync(int hotelId);
+        
     }
 }

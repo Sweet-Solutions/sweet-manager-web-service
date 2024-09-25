@@ -8,7 +8,7 @@ public interface IAssignmentWorkerQueryService
 {
     Task<AssignmentWorker?> Handle(GetAssignmentWorkerByIdQuery query);
     
-    Task<AssignmentWorker?> Handle(GetAssignmentWorkerByWorkerIdQuery query);
+    Task<IEnumerable<AssignmentWorker>> Handle(GetAssignmentWorkerByWorkerIdQuery query);
     
     Task<IEnumerable<AssignmentWorker>> Handle(GetAssignmentWorkerByAdminIdQuery query);
     

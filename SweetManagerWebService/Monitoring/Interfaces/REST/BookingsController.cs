@@ -40,11 +40,11 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpGet("get-all-bookings")]
-        public async Task<IActionResult> AllBookings()
+        [HttpGet("get-all-bookings/{hotelld:int}")]
+        public async Task<IActionResult> AllBookings(int hotelld)
         {
             var bookings = await bookingQueryService
-                .Handle(new GetAllBookingsQuery());
+                .Handle(new GetAllBookingsQuery(hotelld));
 
             var bookingsResource = bookings.Select
                 (BookingResourceFromEntityAssembler

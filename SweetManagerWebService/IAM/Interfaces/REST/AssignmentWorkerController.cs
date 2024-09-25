@@ -43,11 +43,8 @@ public class AssignmentWorkerController(IAssignmentWorkerCommandService assignme
             var assignmentWorker =
                 await assignmentWorkerQueryService.Handle(new GetAssignmentWorkerByWorkerIdQuery(id));
 
-            if (assignmentWorker is null)
-                return BadRequest($"There's no assignment worker for the id: {id}");
-            
             var assignmentWorkerResource =
-                AssignmentWorkerResourceFromEntityAssembler.ToResourceFromEntity(assignmentWorker);
+                assignmentWorker.Select(AssignmentWorkerResourceFromEntityAssembler.ToResourceFromEntity);
 
             return Ok(assignmentWorkerResource);
         }

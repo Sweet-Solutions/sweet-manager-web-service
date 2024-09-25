@@ -12,7 +12,7 @@ public class AssignmentWorkerQueryService(IAssignmentWorkerRepository assignment
         return await assignmentWorkerRepository.FindByIdAsync(query.Id);
     }
 
-    public async Task<AssignmentWorker?> Handle(GetAssignmentWorkerByWorkerIdQuery query)
+    public async Task<IEnumerable<AssignmentWorker>> Handle(GetAssignmentWorkerByWorkerIdQuery query)
     {
         return await assignmentWorkerRepository.FindByWorkerIdAsync(query.WorkerId);
     }

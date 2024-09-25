@@ -7,6 +7,6 @@ public interface IProviderRepository : IBaseRepository<Provider>
 {
     Task<bool> UpdateProviderStateAsync(int id,string address, string email, int phone, string state);
     
-    Task<IEnumerable<Provider>> FindProviderByHotelIdAsync(int providerId,int hotelId);
-
+    Task<IEnumerable<Provider>> FindProviderByHotelIdAsync(int hotelId);
+    
 }

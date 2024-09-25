@@ -24,9 +24,6 @@ namespace SweetManagerWebService.SupplyManagement.Domain.Model.Entities
             Amount = amount;
         }
         
-        
-        
-        
         public SuppliesRequest(CreateSuppliesRequestCommand command)
         {
             PaymentsOwnersId = command.PaymentsOwnersId;

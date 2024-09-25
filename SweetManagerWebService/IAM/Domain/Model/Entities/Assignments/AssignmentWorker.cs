@@ -32,7 +32,7 @@ namespace SweetManagerWebService.IAM.Domain.Model.Entities.Assignments
         {
             WorkersAreasId = command.WorkersAreasId;
             WorkersId = command.WorkersId;
-            AdminsId = command.WorkersId;
+            AdminsId = command.AdminsId;
             StartDate = command.StartDate;
             FinalDate = command.FinalDate;
             State = command.State.ToUpper();

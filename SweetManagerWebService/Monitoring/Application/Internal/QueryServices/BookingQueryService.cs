@@ -11,7 +11,7 @@ namespace SweetManagerWebService.Monitoring.Application.Internal.QueryServices
     {
         public async Task<IEnumerable<Booking>> Handle
             (GetAllBookingsQuery query) =>
-            await bookingRepository.ListAsync();
+            await bookingRepository.FindAllByHotelIdAsync(query.HotelId);
 
         public async Task<Booking?> Handle
             (GetBookingByIdQuery query) =>
