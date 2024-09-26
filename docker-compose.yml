@@ -1,7 +1,7 @@
 ﻿version: "3.9"
 services:
   sweet-manager-webservice:
-    image: sweetmanagerwebservice
+    image: sweetmanagerwebservice:latest
     build:
       context: .
       dockerfile: SweetManagerWebService/Dockerfile
@@ -17,9 +17,13 @@ services:
   sweet-manager-mysql:
     image: 'mysql:latest'
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: sweet-manager
     restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
