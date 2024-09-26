@@ -41,9 +41,12 @@ public class AdminCommandService(IUnitOfWork unitOfWork, IAdminRepository adminR
     {
         try
         {
+            if (await adminRepository.FindById(command.Id) is null)
+                throw new Exception($"There's no admin with the given id: {command.Id}");
+            
             var result = false;
             
-            if (command.Change == "PHONE")
+            if (command.Change.ToUpper() == "PHONE")
             {
                 await adminRepository.ExecuteUpdateAdminPhoneAsync(Convert.ToInt32(command.Value), command.Id);
 

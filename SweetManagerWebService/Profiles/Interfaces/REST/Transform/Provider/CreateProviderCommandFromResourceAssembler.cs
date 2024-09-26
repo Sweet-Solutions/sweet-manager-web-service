@@ -6,5 +6,5 @@ namespace SweetManagerWebService.Profiles.Interfaces.REST.Transform.Provider;
 public class CreateProviderCommandFromResourceAssembler
 {
     public static CreateProviderCommand ToCommandFromResource(CreateProviderResource resource) =>
-    new(resource.Name,resource.Address,resource.Email,resource.Phone,resource.State);
+    new(resource.Id, resource.Name,resource.Address,resource.Email,resource.Phone,resource.State);
 }

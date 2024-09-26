@@ -42,7 +42,7 @@ namespace SweetManagerWebService.Profiles.Domain.Model.Entities
         public Hotel(CreateHotelCommand command)
         {
          this.OwnersId = command.OwnersId;
-         this.Name = command.Name;
+         this.Name = command.Name.ToUpper();
          this.Description = command.Description;
          this.Address = command.Address;
          this.Phone = command.Phone;
@@ -52,7 +52,7 @@ namespace SweetManagerWebService.Profiles.Domain.Model.Entities
         public Hotel(UpdateHotelCommand command)
         {
             this.OwnersId = command.Id;
-            this.Name = command.Name;
+            this.Name = command.Name.ToUpper();
             this.Phone = command.Phone;
             this.Email = command.Email;
         }

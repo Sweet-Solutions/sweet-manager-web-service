@@ -37,19 +37,20 @@ namespace SweetManagerWebService.Profiles.Domain.Model.Aggregates
 
         public Customer(CreateCustomerCommand command)
         {
+            this.Id = command.Id;
             this.Username = command.Username;
-            this.Name = command.Name;
-            this.Surname = command.Surname;
+            this.Name = command.Name.ToUpper();
+            this.Surname = command.Surname.ToUpper();
             this.Email = command.Email;
             this.Phone = command.Phone;
-            this.State = command.State;
+            this.State = command.State.ToUpper();
         }
 
         public Customer(UpdateCustomerCommand command)
         {
             this.Email = command.Email;
             this.Phone = command.Phone;
-            this.State = command.State;
+            this.State = command.State.ToUpper();
         }
     }
 }

@@ -9,7 +9,6 @@ public class CreateSuppliesRequestCommandFromResourceAssembler
     public static CreateSuppliesRequestCommand ToCommandFromResource(CreateSuppliesRequestResource resource)
     {
         return new CreateSuppliesRequestCommand(
-
             resource.PaymentsOwnersId,
             resource.SuppliesId,
             resource.Count,

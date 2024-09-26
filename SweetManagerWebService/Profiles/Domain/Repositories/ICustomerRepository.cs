@@ -7,5 +7,6 @@ public interface ICustomerRepository : IBaseRepository<Customer>
 {
     Task<bool> UpdateCustomerStateAsync(int id,string email, int phone, string state);
     
-    Task<IEnumerable<Customer>> FindCustomerByHotelIdAsync(int customerId,int hotelId);
+    Task<IEnumerable<Customer>> FindCustomerByHotelIdAsync(int hotelId);
+    
 }

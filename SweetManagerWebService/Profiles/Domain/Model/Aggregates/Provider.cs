@@ -34,11 +34,11 @@ namespace SweetManagerWebService.Profiles.Domain.Model.Aggregates
 
         public Provider(CreateProviderCommand command)
         {
-            this.Name = command.Name;
+            this.Name = command.Name.ToUpper();
             this.Address = command.Address;
             this.Email = command.Email;
             this.Phone = command.Phone;
-            this.State = command.State;
+            this.State = command.State.ToUpper();
         }
 
         public Provider(UpdateProviderCommand command)

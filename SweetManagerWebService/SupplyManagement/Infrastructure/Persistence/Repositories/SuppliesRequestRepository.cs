@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
 using SweetManagerWebService.IAM.Domain.Model.Aggregates;
 using SweetManagerWebService.Profiles.Domain.Model.Aggregates;
 using SweetManagerWebService.Profiles.Domain.Model.Entities;
@@ -25,16 +26,12 @@ public class SuppliesRequestRepository(SweetManagerContext context) : BaseReposi
     public async Task<IEnumerable<SuppliesRequest>> FindAllSuppliesRequestsAsync(int queryHotelId)
     {
         return await Task.Run(() => (
-            from suppliesRequest in Context.Set<SuppliesRequest>().ToList()
-            join supply in Context.Set<Supply>().ToList()
-                on suppliesRequest.SuppliesId equals supply.Id
-            join provider in Context.Set<Provider>().ToList()
-                on supply.ProvidersId equals provider.Id
-            join owner in Context.Set<Owner>().ToList()
-                on provider.Id equals owner.Id
-            join hotel in Context.Set<Hotel>().ToList()
-                on owner.Id equals hotel.OwnersId
-            select suppliesRequest
+            from sp in Context.Set<SuppliesRequest>().ToList()
+            join po in Context.Set<PaymentOwner>().ToList() on sp.PaymentsOwnersId equals po.Id
+            join ow in Context.Set<Owner>().ToList() on po.OwnersId equals ow.Id
+            join ho in Context.Set<Hotel>().ToList() on ow.Id equals ho.OwnersId
+            where ho.Id.Equals(queryHotelId)
+            select sp
         ).ToList());
     }
 }

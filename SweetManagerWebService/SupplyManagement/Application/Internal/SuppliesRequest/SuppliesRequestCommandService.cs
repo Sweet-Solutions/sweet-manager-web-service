@@ -34,6 +34,7 @@ public class SuppliesRequestCommandService(
             var suppliesRequest = new Domain.Model.Entities.SuppliesRequest(command); 
 
             await suppliesRequestRepository.AddAsync(suppliesRequest);
+            
             await unitOfWork.CompleteAsync();
 
             return true;

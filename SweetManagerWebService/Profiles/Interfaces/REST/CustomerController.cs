@@ -56,11 +56,11 @@ public class CustomerController : ControllerBase
         return Ok(result);
     }
     
-    [HttpGet]
-    public async Task<IActionResult> AllCustomers()
+    [HttpGet("get-all-customers/{hotelId:int}")]
+    public async Task<IActionResult> AllCustomers(int hotelId)
     {
         var customer = await _customerQueryService
-            .Handle(new GetAllCustomersQuery());
+            .Handle(new GetAllCustomersQuery(hotelId));
 
         var customerResource = customer.Select
         (CustomerResourceFromEntityAssembler

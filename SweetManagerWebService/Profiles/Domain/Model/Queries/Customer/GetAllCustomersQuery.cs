@@ -1,3 +1,3 @@
 ﻿namespace SweetManagerWebService.Profiles.Domain.Model.Queries.Customer;
 
-public record GetAllCustomersQuery();
+public record GetAllCustomersQuery(int HotelId);

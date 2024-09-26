@@ -7,5 +7,7 @@ namespace SweetManagerWebService.Profiles.Application.Internal.QueryService;
 
 public class CustomerQueryService (ICustomerRepository customerRepository) : ICustomerQueryService
 {
-    public async Task<IEnumerable<Customer>> Handle(GetAllCustomersQuery query) => await customerRepository.ListAsync();
+    public async Task<IEnumerable<Customer>> Handle(GetAllCustomersQuery query) => await customerRepository.FindCustomerByHotelIdAsync(query.HotelId);
+    
+    
 }

@@ -45,8 +45,11 @@ public class WorkerCommandService(IUnitOfWork unitOfWork,
         try
         {
             var result = false;
+
+            if (await workerRepository.FindById(command.Id) is null)
+                throw new Exception($"There's no worker with the given id: {command.Id}");
             
-            if (command.Change == "PHONE")
+            if (command.Change.ToUpper() == "PHONE")
             {
                 await workerRepository.ExecuteUpdateWorkerPhoneAsync(Convert.ToInt32(command.Value), command.Id);
 

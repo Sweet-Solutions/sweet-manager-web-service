@@ -7,9 +7,16 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST.Transform.Booking
     public class CreateBookingCommandFromResourceAssembler
     {
         public static CreateBookingCommand ToCommandFromResource
-            (CreateBookingResource resource) =>
-            new(resource.PaymentCustomerId, resource.RoomId,
-                resource.Description, resource.StartDate, resource.FinalDate,
+            (CreateBookingResource resource)
+        {
+            var startDate = DateTime.Parse(resource.StartDate);
+
+            var finalDate = DateTime.Parse(resource.FinalDate);
+            
+            return new(resource.PaymentCustomerId, resource.RoomId,
+                resource.Description, startDate, finalDate,
                 resource.PriceRoom, resource.NightCount, EBookingState.RESERVADO);
+        }
+            
     }
 }

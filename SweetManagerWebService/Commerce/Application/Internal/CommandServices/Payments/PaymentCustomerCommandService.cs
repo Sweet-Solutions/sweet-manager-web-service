@@ -13,6 +13,12 @@ public class PaymentCustomerCommandService(IPaymentCustomerRepository paymentCus
     {
         try
         {
+
+            var paymentValidation = await paymentCustomerRepository.FindByCustomerId(command.CustomerId);
+
+            if (!paymentValidation.Any())
+                throw new Exception($"There's no payments with the given customer id: {command.CustomerId}");
+            
             await paymentCustomerRepository.AddAsync(new PaymentCustomer(command.CustomerId, command.FinalAmount));
 
             await unitOfWork.CompleteAsync();

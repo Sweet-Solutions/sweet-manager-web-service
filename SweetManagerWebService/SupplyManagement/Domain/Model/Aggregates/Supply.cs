@@ -22,28 +22,28 @@ namespace SweetManagerWebService.SupplyManagement.Domain.Model.Aggregates
         {
             Id = id;
             ProvidersId = providersId;
-            Name = name;
+            Name = name.ToUpper();
             Price = price;
             Stock = stock;
-            State = state;
+            State = state.ToUpper();
         }
 
         public Supply(CreateSupplyCommand command)
         {
             ProvidersId = command.ProvidersId; 
-            Name = command.Name;
+            Name = command.Name.ToUpper();
             Price = command.Price;
             Stock = command.Stock;
-            State = command.State;
+            State = command.State.ToUpper();
         }
         
         public void Update(UpdateSupplyCommand command)
         {
             ProvidersId = command.ProvidersId;
-            Name = command.Name;
+            Name = command.Name.ToUpper();
             Price = command.Price;
             Stock = command.Stock;
-            State = command.State;
+            State = command.State.ToUpper();
         }
         
         public void Delete()

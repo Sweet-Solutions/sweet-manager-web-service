@@ -43,8 +43,11 @@ public class OwnerCommandService(IUnitOfWork unitOfWork,
         try
         {
             var result = false;
+
+            if (await ownerRepository.FindById(command.Id) is null)
+                throw new Exception($"There's no owner with the given id: {command.Id}");
             
-            if (command.Change == "PHONE")
+            if (command.Change.ToUpper() == "PHONE")
             {
                 result = await ownerRepository.ExecuteUpdateOwnerPhoneAsync(Convert.ToInt32(command.Value), command.Id);
 
