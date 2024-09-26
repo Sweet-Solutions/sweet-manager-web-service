@@ -1,5 +1,4 @@
-﻿version: "3.9"
-services:
+﻿services:
   sweet-manager-webservice:
     image: sweetmanagerwebservice:latest
     build:
