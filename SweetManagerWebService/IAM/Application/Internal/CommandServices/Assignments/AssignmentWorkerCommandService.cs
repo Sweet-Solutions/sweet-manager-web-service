@@ -19,6 +19,9 @@ public class AssignmentWorkerCommandService(IAssignmentWorkerRepository assignme
             
             if (verificationWorkerId.Any())
                 throw new Exception($"There's already an active assignment with the given worker id: {command.WorkersId}");
+
+            if (string.IsNullOrEmpty(command.WorkersId.ToString()) || string.IsNullOrEmpty(command.AdminsId.ToString()))
+                throw new Exception("No empty dnis.");
             
             if (command.WorkersId is 0)
             {
