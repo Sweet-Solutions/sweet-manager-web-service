@@ -14,6 +14,7 @@ public class AssignmentWorkerCommandService(IAssignmentWorkerRepository assignme
         try
         {
 
+            // Find an Active Assignment for the given Worker's DNI
             var verificationWorkerId = await assignmentWorkerRepository.FindByWorkerIdAsync(command.WorkersId);
             
             if (verificationWorkerId.Any())

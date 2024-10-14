@@ -16,7 +16,7 @@ public class AssignmentWorkerRepository(SweetManagerContext context) : BaseRepos
         => await Task.Run(() => (
             from aw in Context.Set<AssignmentWorker>().ToList()
             join wk in Context.Set<Worker>().ToList() on aw.WorkersId equals wk.Id
-            where wk.Id.Equals(workerId)
+            where wk.Id.Equals(workerId) && aw.FinalDate > DateTime.Now
             select aw
         ).ToList());
 
