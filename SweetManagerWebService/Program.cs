@@ -393,11 +393,11 @@ app.UseCors(
     b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin() 
 );
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+
+app.UseSwaggerUI();
+
 
 app.UseRouting();
 

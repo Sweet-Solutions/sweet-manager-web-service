@@ -7,6 +7,7 @@ namespace SweetManagerWebService.IAM.Infrastructure.Population.Roles;
 
 public class RolesInitializer(IRoleCommandService roleCommandService,
     IRoleQueryService roleQueryService,
+    IWorkerAreaQueryService workerAreaQueryService,
     SweetManagerContext context)
 {
     public async Task InitializeAsync()
@@ -21,7 +22,6 @@ public class RolesInitializer(IRoleCommandService roleCommandService,
 
             await roleCommandService.Handle(new SeedRolesCommand());
         }
-        
     }
 
 }
