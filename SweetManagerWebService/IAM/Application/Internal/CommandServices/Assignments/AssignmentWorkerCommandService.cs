@@ -16,18 +16,8 @@ public class AssignmentWorkerCommandService(IAssignmentWorkerRepository assignme
 
             var verificationWorkerId = await assignmentWorkerRepository.FindByWorkerIdAsync(command.WorkersId);
             
-            if (!verificationWorkerId.Any())
-                throw new Exception($"There's no Assignment with the given worker id: {command.WorkersId}");
-
-            verificationWorkerId = await assignmentWorkerRepository.FindByAdminIdAsync(command.AdminsId);
-            
-            if (!verificationWorkerId.Any())
-                throw new Exception($"There's no Assignment with the given admin id: {command.AdminsId}");
-
-            verificationWorkerId = await assignmentWorkerRepository.FindByWorkerAreaIdAsync(command.WorkersAreasId);
-
             if (verificationWorkerId.Any())
-                throw new Exception($"There's no Assignment with the given worker area id: {command.WorkersAreasId}");
+                throw new Exception($"There's already an active assignment with the given worker id: {command.WorkersId}");
             
             if (command.WorkersId is 0)
             {
