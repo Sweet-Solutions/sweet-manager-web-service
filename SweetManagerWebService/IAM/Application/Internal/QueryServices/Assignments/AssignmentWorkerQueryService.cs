@@ -26,4 +26,7 @@ public class AssignmentWorkerQueryService(IAssignmentWorkerRepository assignment
     {
         return await assignmentWorkerRepository.FindByWorkerAreaIdAsync(query.WorkerAreaId);
     }
+    
+    
+    
 }

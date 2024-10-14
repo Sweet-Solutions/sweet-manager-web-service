@@ -10,4 +10,7 @@ public interface IWorkerAreaRepository : IBaseRepository<WorkerArea>
     Task<WorkerArea?> FindByNameAsync(string name, int hotelId);
 
     Task<int?> FindIdByNameAsync(string name, int hotelId);
+
+    Task<string?> FindByWorkerIdAsync(int workerId);
+    
 }

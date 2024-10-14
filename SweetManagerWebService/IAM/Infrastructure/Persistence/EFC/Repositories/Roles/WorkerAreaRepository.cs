@@ -61,5 +61,23 @@ public class WorkerAreaRepository(SweetManagerContext context) : BaseRepository<
             where wa.Name == name && ho.Id == hotelId
             select wa.Id
         ).FirstOrDefault());
-    
+
+    public async Task<string?> FindByWorkerIdAsync(int workerId)
+    {
+        Task<string?> queryAsync = new(() => (
+            from wo in Context.Set<Worker>().ToList()
+            join ass in Context.Set<AssignmentWorker>().ToList()
+                on wo.Id equals ass.WorkersId
+            join wor in Context.Set<WorkerArea>().ToList()
+                on ass.WorkersAreasId equals wor.Id
+            where wo.Id.Equals(workerId) && ass.FinalDate > DateTime.Now
+            select wor.Name 
+        ).FirstOrDefault());
+        
+        queryAsync.Start();
+
+        var result = await queryAsync;
+
+        return result;
+    }
 }

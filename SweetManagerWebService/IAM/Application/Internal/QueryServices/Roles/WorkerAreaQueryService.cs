@@ -21,4 +21,10 @@ public class WorkerAreaQueryService(IWorkerAreaRepository workerAreaRepository) 
     {
         return await workerAreaRepository.FindIdByNameAsync(query.Name, query.HotelId);
     }
+
+    public async Task<string?> Handle(GetWorkerAreaByWorkerId query)
+    {
+        return await workerAreaRepository.FindByWorkerIdAsync(query.WorkerId);
+    }
+    
 }

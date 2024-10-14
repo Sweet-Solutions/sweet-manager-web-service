@@ -92,7 +92,7 @@ public class AdminCommandService(IUnitOfWork unitOfWork, IAdminRepository adminR
                 Id = user.Id,
                 PasswordHash = userCredential.Code,
                 Role = "ROLE_ADMIN",
-                Hotel = hotel
+                Hotel = hotel // AGREGAR SUB ROL PARA WORKER
             });
 
             return new

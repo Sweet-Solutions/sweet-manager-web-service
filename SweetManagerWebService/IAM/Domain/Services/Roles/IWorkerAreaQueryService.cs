@@ -10,4 +10,7 @@ public interface IWorkerAreaQueryService
     Task<WorkerArea?> Handle(GetWorkerAreaByNameAndHotelIdQuery andHotelIdQuery);
 
     Task<int?> Handle(GetWorkerAreaIdByRoleNameAndHotelIdQuery andHotelIdQuery);
+
+    Task<string?> Handle(GetWorkerAreaByWorkerId query);
+    
 }

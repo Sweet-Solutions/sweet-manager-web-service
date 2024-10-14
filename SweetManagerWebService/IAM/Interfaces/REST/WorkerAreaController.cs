@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SweetManagerWebService.IAM.Domain.Model.Queries;
 using SweetManagerWebService.IAM.Domain.Services.Roles;
 using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Attributes;
+using SweetManagerWebService.IAM.Interfaces.REST.Resource.Assignments;
 using SweetManagerWebService.IAM.Interfaces.REST.Resource.Authentication.Role;
 using SweetManagerWebService.IAM.Interfaces.REST.Transform.Authentication.Role;
 
@@ -74,5 +75,23 @@ public class WorkerAreaController(IWorkerAreaCommandService workerAreaCommandSer
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("get-worker-areas-by-worker-id")]
+    [Authorize]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetWorkerAreasByWorkerId([FromQuery] int workerId)
+    {
+        try
+        {
+            var workerArea = await workerAreaQueryService.Handle(new GetWorkerAreaByWorkerId(workerId));
+
+            return !string.IsNullOrEmpty(workerArea) ? Ok(new SubRoleResource(workerArea)) : Ok("Empty");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
     
 }
