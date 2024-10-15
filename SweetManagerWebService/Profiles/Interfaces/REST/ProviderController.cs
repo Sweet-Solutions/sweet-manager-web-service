@@ -27,12 +27,18 @@ namespace SweetManagerWebService.Profiles.Interfaces.REST
         [HttpPost("create-provider")]
         public async Task<IActionResult> CreateProvider([FromBody] CreateProviderResource resource)
         {
-            var result = await _providerCommandService
-                .Handle(CreateProviderCommandFromResourceAssembler
-                    .ToCommandFromResource(resource));
-            if (result is false)
-                return BadRequest();
-            return Ok(result);
+            try
+            {
+                var result = await _providerCommandService
+                    .Handle(CreateProviderCommandFromResourceAssembler
+                        .ToCommandFromResource(resource));
+                
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("update-provider")]

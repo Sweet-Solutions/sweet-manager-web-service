@@ -27,7 +27,7 @@ namespace SweetManagerWebService.Monitoring.Interfaces.REST
             return Ok(result);
         }
 
-        [HttpPost("update-booking-state")]
+        [HttpPut("update-booking-state")]
         public async Task<IActionResult> UpdateBookingState([FromBody] UpdateBookingStateResource resource)
         {
             var result = await bookingCommandService

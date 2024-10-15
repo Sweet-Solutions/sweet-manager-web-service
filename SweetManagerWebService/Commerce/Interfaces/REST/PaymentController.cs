@@ -1,5 +1,6 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using SweetManagerWebService.Commerce.Domain.Model.Queries.Dashboard;
 using SweetManagerWebService.Commerce.Domain.Model.Queries.Payments;
 using SweetManagerWebService.Commerce.Domain.Services.Payments;
 using SweetManagerWebService.Commerce.Interfaces.REST.Resources.Payments;
@@ -14,7 +15,8 @@ namespace SweetManagerWebService.Commerce.Interfaces.REST;
 public class PaymentController(IPaymentOwnerCommandService paymentOwnerCommandService,
     IPaymentCustomerCommandService paymentCustomerCommandService,
     IPaymentOwnerQueryService paymentOwnerQueryService,
-    IPaymentCustomerQueryService paymentCustomerQueryService) : ControllerBase
+    IPaymentCustomerQueryService paymentCustomerQueryService,
+    IDashboardQueryService dashboardQueryService) : ControllerBase
 {
 
     [HttpPost("create-payment-owner")]
@@ -103,6 +105,24 @@ public class PaymentController(IPaymentOwnerCommandService paymentOwnerCommandSe
                 payments.Select(PaymentCustomerResourceFromEntityAssembler.ToResourceFromEntity);
 
             return Ok(paymentResources);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("get-comparative-incomes-by-hotel-id")]
+    public async Task<IActionResult> GetComparativeIncomesAndExpenses([FromQuery] int hotelId)
+    {
+        try
+        {
+            var comparativeIncomes = await dashboardQueryService.Handle(new GetAdministrationWeeklyExpensesByHotelId(hotelId));
+
+            var comparativeIncomesResources =
+                comparativeIncomes.Select(ComparativeIncomeResourceFromEntityAssembler.ToResourceFromEntity);
+            
+            return Ok(comparativeIncomesResources);
         }
         catch (Exception ex)
         {

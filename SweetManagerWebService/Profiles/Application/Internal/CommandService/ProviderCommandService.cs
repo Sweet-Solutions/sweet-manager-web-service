@@ -12,10 +12,15 @@ public class ProviderCommandService(IProviderRepository providerRepository, IUni
         try
         {
             await providerRepository.AddAsync(new(command));
+            
             await unitOfWork.CompleteAsync();
+            
             return true;
         }
-        catch (Exception) { return false; }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
     public async Task<bool> 
         Handle(UpdateProviderCommand command)=> 

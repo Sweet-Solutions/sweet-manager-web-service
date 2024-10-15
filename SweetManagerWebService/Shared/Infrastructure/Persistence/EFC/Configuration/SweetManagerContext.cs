@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
+using Microsoft.EntityFrameworkCore;
 using SweetManagerWebService.Commerce.Domain.Model.Aggregates;
 using SweetManagerWebService.Commerce.Domain.Model.Entities.Contracts;
 using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
@@ -23,6 +24,13 @@ namespace SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configura
     {
         public SweetManagerContext() { }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
+            base.OnConfiguring(builder);
+            // Enable Audit Fields Interceptors
+            builder.AddCreatedUpdatedInterceptor();
+        }
+        
         public SweetManagerContext
             (DbContextOptions<SweetManagerContext> options)
             : base(options) { }

@@ -1,8 +1,10 @@
+using System.Data;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MySql.Data.MySqlClient;
 using sweetmanager.API.Shared.Domain.Repositories;
 
 using SweetManagerWebService.Shared.Infrastructure.Interfaces.ASP.Configuration;
@@ -17,6 +19,7 @@ using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Contr
 using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Payments;
 using SweetManagerWebService.Commerce.Application.Internal.CommandServices.Subscriptions;
 using SweetManagerWebService.Commerce.Application.Internal.QueryServices.Contracts;
+using SweetManagerWebService.Commerce.Application.Internal.QueryServices.Dashboard;
 using SweetManagerWebService.Commerce.Application.Internal.QueryServices.Payments;
 using SweetManagerWebService.Commerce.Application.Internal.QueryServices.Subscriptions;
 using SweetManagerWebService.Commerce.Domain.Repositories.Contracts;
@@ -25,6 +28,7 @@ using SweetManagerWebService.Commerce.Domain.Repositories.Subscriptions;
 using SweetManagerWebService.Commerce.Domain.Services.Contracts;
 using SweetManagerWebService.Commerce.Domain.Services.Payments;
 using SweetManagerWebService.Commerce.Domain.Services.Subscriptions;
+using SweetManagerWebService.Commerce.Infrastructure.Persistence.Dapper.Dashboard;
 using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Contracts;
 using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Payments;
 using SweetManagerWebService.Commerce.Infrastructure.Persistence.EFC.Repositories.Subscriptions;
@@ -108,6 +112,8 @@ builder.Services.AddSwaggerGen();
 #region Database Configuration
 // Add Database Connection
 var connectionString = builder.Configuration.GetConnectionString("SweetManager");
+
+builder.Services.AddTransient<IDbConnection>(db => new MySqlConnection(connectionString));
 
 var connectionStringFromEnvironment = Environment.GetEnvironmentVariable("SweetManagerDbConnection");
 
@@ -264,6 +270,10 @@ builder.Services.AddScoped<IPaymentOwnerQueryService, PaymentOwnerQueryService>(
 
 builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
 builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>();
+
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+
+builder.Services.AddScoped<IDashboardQueryService, DashboardQueryService>();
 
 // SUPPLY MANAGEMENT BOUNDED CONTEXT
 builder.Services.AddScoped<ISupplyRepository, SupplyRepository>(); 

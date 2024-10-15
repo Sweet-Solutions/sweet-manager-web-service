@@ -34,6 +34,7 @@ namespace SweetManagerWebService.Profiles.Domain.Model.Aggregates
 
         public Provider(CreateProviderCommand command)
         {
+            this.Id = command.Id;
             this.Name = command.Name.ToUpper();
             this.Address = command.Address;
             this.Email = command.Email;

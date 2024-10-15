@@ -1,3 +1,3 @@
-﻿namespace SweetManagerWebService.SupplyManagement.Interfaces.REST;
+﻿namespace SweetManagerWebService.SupplyManagement.Interfaces.REST.Resources;
 
-public record CreateSupplyResource(int Id, int ProvidersId, string Name, decimal Price, int Stock, string State);
+public record CreateSupplyResource(int ProvidersId, string Name, decimal Price, int Stock, string State);

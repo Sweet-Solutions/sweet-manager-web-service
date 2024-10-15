@@ -1,4 +1,5 @@
 ﻿using SweetManagerWebService.SupplyManagement.Domain.Model.Commands;
+using SweetManagerWebService.SupplyManagement.Interfaces.REST.Resources;
 
 namespace SweetManagerWebService.SupplyManagement.Interfaces.REST.Transform;
 
