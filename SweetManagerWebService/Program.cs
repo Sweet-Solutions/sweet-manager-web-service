@@ -234,6 +234,8 @@ builder.Services.AddScoped<IAssignmentWorkerCommandService, AssignmentWorkerComm
 builder.Services.AddScoped<IAssignmentWorkerQueryService, AssignmentWorkerQueryService>();
 builder.Services.AddScoped<IAssignmentWorkerRepository, AssignmentWorkerRepository>();
 
+builder.Services.AddScoped<ExternalRoomService>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Monitoring Bounded Context

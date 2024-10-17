@@ -17,5 +17,12 @@ namespace SweetManagerWebService.Monitoring.Interfaces.ACL.Services
         public async Task<bool> ExistsRoomById(int id) =>
             await roomQueryService.Handle
             (new GetRoomByIdQuery(id)) != null;
+
+        public async Task<int> GetRoomsCount(int hotelId)
+        {
+            var rooms = await roomQueryService.Handle(new GetAllRoomsQuery(hotelId));
+
+            return rooms.Count();
+        }
     }
 }
