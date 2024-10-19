@@ -8,7 +8,6 @@ using SweetManagerWebService.IAM.Domain.Services.Users.Worker;
 using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using SweetManagerWebService.IAM.Interfaces.REST.Resource.Authentication.User;
 using SweetManagerWebService.IAM.Interfaces.REST.Transform.Authentication.User;
-using SweetManagerWebService.Monitoring.Domain.Services.Room;
 
 namespace SweetManagerWebService.IAM.Interfaces.REST;
 
