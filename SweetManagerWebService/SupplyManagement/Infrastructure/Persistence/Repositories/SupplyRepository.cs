@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sweetmanager.API.Shared.Domain.Repositories;
+using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
 using SweetManagerWebService.IAM.Domain.Model.Aggregates;
 using SweetManagerWebService.Profiles.Domain.Model.Aggregates;
 using SweetManagerWebService.Profiles.Domain.Model.Entities;
@@ -27,10 +28,12 @@ public class SupplyRepository : BaseRepository<Supply>, ISupplyRepository
     {
         return await Task.Run(() => (
             from supply in Context.Set<Supply>().ToList()
-            join provider in Context.Set<Provider>().ToList()
-                on supply.ProvidersId equals provider.Id
+            join suppliesRequest in Context.Set<SuppliesRequest>().ToList()
+                on supply.Id equals suppliesRequest.SuppliesId
+            join paymentowner in Context.Set<PaymentOwner>().ToList()
+                on suppliesRequest.PaymentsOwnersId equals paymentowner.Id
             join owner in Context.Set<Owner>().ToList()
-                on provider.Id equals owner.Id
+                on paymentowner.OwnersId equals owner.Id
             join hotel in Context.Set<Hotel>().ToList()
                 on owner.Id equals hotel.OwnersId
             where hotel.Id == hotelId
