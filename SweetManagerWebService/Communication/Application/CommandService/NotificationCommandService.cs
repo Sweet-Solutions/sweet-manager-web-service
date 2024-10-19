@@ -12,12 +12,21 @@ public class NotificationCommandService(INotificationRepository notificationRepo
     {
         try
         {
+            var adminId = command.AdminsId;
+            if (command.AdminsId is 0)
+                adminId = null;
+
+            var workerId = command.WorkersId;
+
+            if (command.WorkersId is 0)
+                workerId = null;
+            
             await notificationRepository.AddAsync(new Notification
             {
                 TypesNotificationsId = command.TypesNotificationsId,
                 OwnersId = command.OwnersId,
-                AdminsId = command.AdminsId,
-                WorkersId = command.WorkersId,
+                AdminsId = adminId,
+                WorkersId = workerId,
                 Title = command.Title,
                 Description = command.Description
             });
