@@ -26,7 +26,7 @@ public class RequestAuthorizationMiddleware(RequestDelegate next, ILogger<Reques
 
             return;
         }
-        
+            
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
         var tokenResult = tokenService.ValidateToken(token) ?? throw new Exception("Invalid Token!");
