@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using sweetmanager.API.Shared.Domain.Repositories;
 using SweetManagerWebService.Commerce.Domain.Model.Entities.Payments;
 using SweetManagerWebService.IAM.Domain.Model.Aggregates;
-using SweetManagerWebService.Profiles.Domain.Model.Aggregates;
 using SweetManagerWebService.Profiles.Domain.Model.Entities;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
 using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -41,5 +39,4 @@ public class SupplyRepository : BaseRepository<Supply>, ISupplyRepository
         ).ToList());
     }
     
-   
 }
