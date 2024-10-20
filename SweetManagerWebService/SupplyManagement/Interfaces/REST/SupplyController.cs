@@ -10,23 +10,15 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
     [Route("api/[controller]")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
-    public class SupplyController : ControllerBase
+    public class SupplyController(ISupplyCommandService supplyCommandService, ISupplyQueryService supplyQueryService) : ControllerBase
     {
-        private readonly ISupplyQueryService _queryService;
-        private readonly ISupplyCommandService _commandService;
 
-        public SupplyController(ISupplyQueryService queryService, ISupplyCommandService commandService)
-        {
-            _queryService = queryService;
-            _commandService = commandService;
-        }
-
-        [HttpPost]
+        [HttpPost("create-supply")]
         public async Task<IActionResult> CreateSupply([FromBody] CreateSupplyResource resource)
         {
             try
             {
-                var result = await _commandService.Handle(CreateSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
+                var result = await supplyCommandService.Handle(CreateSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
                 if (!result)
                 {
                     return BadRequest("Failed to create supply.");
@@ -52,7 +44,7 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
                 }
 
                 // The `id` is passed via the route, so we don't pass it in the body
-                var result = await _commandService.Handle(UpdateSupplyCommandFromResource.FromResource(id, resource));
+                var result = await supplyCommandService.Handle(UpdateSupplyCommandFromResource.FromResource(id, resource));
 
                 if (!result)
                 {
@@ -67,12 +59,12 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("delete-supply")]
         public async Task<IActionResult> DeleteSupply([FromBody] DeleteSupplyResource resource)
         {
             try
             {
-                var result = await _commandService.Handle(DeleteSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
+                var result = await supplyCommandService.Handle(DeleteSupplyCommandFromResourceAssembler.ToCommandFromResource(resource));
                 if (!result)
                 {
                     return BadRequest("Failed to delete supply.");
@@ -91,7 +83,7 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
         {
             try
             {
-                var result = await _queryService.Handle(new GetSupplyByIdQuery(id));
+                var result = await supplyQueryService.Handle(new GetSupplyByIdQuery(id));
                 if (result == null)
                 {
                     return NotFound($"Supply with ID {id} not found.");
@@ -107,13 +99,13 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
             }
         }
 
-        [HttpGet("HotelId/{HotelId}")]
-        public async Task<IActionResult> GetAllSupplies([FromRoute] int HotelId)
+        [HttpGet("get-all-supplies")]
+        public async Task<IActionResult> GetAllSupplies([FromQuery] int hotelId)
         {
             try
             {
                 // Pass HotelId into the query
-                var result = await _queryService.Handle(new GetAllSuppliesQuery(HotelId));
+                var result = await supplyQueryService.Handle(new GetAllSuppliesQuery(hotelId));
 
                 // Map the result to a collection of supply resources
                 var supplyResource = result.Select(SupplyResourceFromEntityAssembler.ToResourceFromEntity);
@@ -133,7 +125,7 @@ namespace SweetManagerWebService.SupplyManagement.Interfaces.REST
         {
             try
             {
-                var result = await _queryService.Handle(new GetSupplyByProviderIdQuery(providerId));
+                var result = await supplyQueryService.Handle(new GetSupplyByProviderIdQuery(providerId));
                 if (result == null)
                 {
                     return NotFound($"Supply with Provider ID {providerId} not found.");
