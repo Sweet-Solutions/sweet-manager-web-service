@@ -92,9 +92,6 @@ using SweetManagerWebService.ResourceManagement.Domain.Services.Report;
 using SweetManagerWebService.ResourceManagement.Domain.Services.TypeReport;
 using SweetManagerWebService.ResourceManagement.Infrastructure.Persistence.EFC.Repositories;
 using SweetManagerWebService.ResourceManagement.Infrastructure.Population.TypeReports;
-using SweetManagerWebService.Shared.Infrastructure.Interfaces.ASP.Configuration;
-using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Configuration;
-using SweetManagerWebService.Shared.Infrastructure.Persistence.EFC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

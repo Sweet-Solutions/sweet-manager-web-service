@@ -1,5 +1,6 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using SweetManagerWebService.Profiles.Domain.Model.Queries.Hotel;
 using SweetManagerWebService.Profiles.Domain.Services.Hotel;
 using SweetManagerWebService.Profiles.Interfaces.REST.Resources.Hotel;
@@ -7,6 +8,7 @@ using SweetManagerWebService.Profiles.Interfaces.REST.Transform.Hotel;
 
 namespace SweetManagerWebService.Profiles.Interfaces.REST
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
