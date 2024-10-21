@@ -344,6 +344,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
+    options.RequireHttpsMetadata = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
