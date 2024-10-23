@@ -51,7 +51,7 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
 
         try
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(_tokenSettings.SecretKey));
+            var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenSettings.SecretKey));
             
             JwtSecurityTokenHandler tokenHandler = new();
 
@@ -69,16 +69,12 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
             };
 
             var principal = tokenHandler.ValidateToken(token, validationParameters, out var securityToken);
-
-            if (securityToken is JwtSecurityToken jwtToken)
-                if (!jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
-                        StringComparison.InvariantCultureIgnoreCase))
-                    return null;
-
+            
             var result = (JwtSecurityToken)securityToken;
 
             var id = Convert.ToInt32(result.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value);
-
+            
+            // Could encode to BASE 64 to prevent url errors.
             var code = Convert.ToString(result.Claims.First(claim => claim.Type == ClaimTypes.Hash).Value);
 
             var role = Convert.ToString(result.Claims.First(claim =>claim.Type ==  ClaimTypes.Role).Value);
@@ -98,6 +94,6 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
     {
         if (expires is null) return false;
         
-        return DateTime.Now < expires;
+        return DateTime.UtcNow < expires;
     }
 }
