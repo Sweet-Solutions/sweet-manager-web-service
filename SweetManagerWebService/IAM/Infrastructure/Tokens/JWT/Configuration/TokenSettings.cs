@@ -8,13 +8,13 @@ public class TokenSettings
     
     public string Issuer { get; set;  }
     
-    public int ExpirationInMinutes { get; set; }
+    public int Expire { get; set; }
 
     public TokenSettings()
     {
         SecretKey = string.Empty;
         Audience = string.Empty;
         Issuer = string.Empty;
-        ExpirationInMinutes = 0;
+        Expire = 0;
     }
 }
