@@ -37,7 +37,7 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
             issuer: _tokenSettings.Issuer,
             audience: _tokenSettings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_tokenSettings.ExpirationInMinutes),
+            expires: DateTime.UtcNow.AddMinutes(_tokenSettings.Expire),
             signingCredentials: credentials
         );
 
@@ -93,7 +93,18 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
         TokenValidationParameters validationParameters)
     {
         if (expires is null) return false;
+
+        var now = DateTime.UtcNow;
+
+        var valid = now < expires;
+
+        if (!valid)
+        {
+            Console.WriteLine($"Token expired. Current time: {now}, Expiration time: {expires}");
+        }
         
-        return DateTime.UtcNow < expires;
+        //return DateTime.UtcNow < expires;
+
+        return valid;
     }
 }
