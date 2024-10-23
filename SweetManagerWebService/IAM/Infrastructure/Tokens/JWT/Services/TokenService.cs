@@ -18,12 +18,19 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
 
         SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
+        string validationHotel = user.Hotel.ToString();
+        
+        if (string.IsNullOrEmpty(user.Hotel.ToString()))
+        {
+            validationHotel = string.Empty;
+        }
+        
         Claim[]? claims =
         [
             new Claim(ClaimTypes.Sid, user.Id.ToString()),
             new Claim(ClaimTypes.Hash, user.PasswordHash),
             new Claim(ClaimTypes.Role, user.Role),
-            new Claim(ClaimTypes.Locality, user.Hotel.ToString())
+            new Claim(ClaimTypes.Locality, validationHotel)
         ];
 
         JwtSecurityToken token = new(

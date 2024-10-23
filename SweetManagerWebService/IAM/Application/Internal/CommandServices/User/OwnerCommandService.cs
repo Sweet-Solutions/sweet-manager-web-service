@@ -82,7 +82,7 @@ public class OwnerCommandService(IUnitOfWork unitOfWork,
             if (!hashingService.VerifyHash(command.Password, userCredential!.Code[..24], userCredential!.Code[24..]))
                 throw new InvalidPasswordException();
 
-            var hotel = ownerRepository.FindHotelIdByOwnerId(user.Id);
+            var hotel = await ownerRepository.FindHotelIdByOwnerId(user.Id);
 
             var token = tokenService.GenerateToken(new
             {
