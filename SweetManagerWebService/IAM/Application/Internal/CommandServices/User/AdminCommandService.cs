@@ -85,14 +85,14 @@ public class AdminCommandService(IUnitOfWork unitOfWork, IAdminRepository adminR
             if (!hashingService.VerifyHash(command.Password, userCredential!.Code[..24], userCredential!.Code[24..]))
                 throw new InvalidPasswordException();
 
-            var hotel = adminRepository.FindHotelIdByAdminId(user.Id);
+            var hotel = await adminRepository.FindHotelIdByAdminId(user.Id);
             
             var token = tokenService.GenerateToken(new
             {
                 Id = user.Id,
                 PasswordHash = userCredential.Code,
                 Role = "ROLE_ADMIN",
-                Hotel = hotel // AGREGAR SUB ROL PARA WORKER
+                Hotel = hotel 
             });
 
             return new

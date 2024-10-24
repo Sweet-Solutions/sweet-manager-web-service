@@ -88,7 +88,7 @@ public class WorkerCommandService(IUnitOfWork unitOfWork,
             if (!hashingService.VerifyHash(command.Password, userCredential!.Code[..24], userCredential!.Code[24..]))
                 throw new InvalidPasswordException();
 
-            var hotel = workerRepository.FindHotelIdByWorkerId(user.Id);
+            var hotel = await workerRepository.FindHotelIdByWorkerId(user.Id);
 
             var token = tokenService.GenerateToken(new
             {
