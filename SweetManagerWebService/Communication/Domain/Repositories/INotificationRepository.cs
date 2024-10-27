@@ -9,4 +9,8 @@ public interface INotificationRepository : IBaseRepository<Notification>
 
     Task<IEnumerable<Notification>> FindAllByHotelIdAsync(int hotelId);
 
+    Task<IEnumerable<Notification>> FindAllByWorkerIdAsync(int workerId);
+
+    Task<IEnumerable<Notification>> FindAllByHotelIdAndExitsOwnersIdAsync(int hotelId);
+    
 }
