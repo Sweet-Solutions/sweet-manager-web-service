@@ -17,17 +17,21 @@ namespace SweetManagerWebService.Communication.Interfaces.REST
         [HttpPost]
         public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationResource resource)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var result = await notificationCommandService.Handle(CreateNotificationCommandFromResourceAssembler.ToCommandFromResource(resource));
+
+                return Ok(result);
             }
-
-            var result = await notificationCommandService.Handle(CreateNotificationCommandFromResourceAssembler.ToCommandFromResource(resource));
-
-            if (result is false)
-                return BadRequest();
-
-            return Ok(result);
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         
         [HttpGet("get-all-notifications")]
@@ -64,6 +68,45 @@ namespace SweetManagerWebService.Communication.Interfaces.REST
             catch (Exception ex)
             {
                 return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("get-all-notifications-by-workerId")]
+        public async Task<IActionResult> GetAllNotificationsByWorkerId([FromQuery] int workerId)
+        {
+            try
+            {
+                var notifications =
+                    await notificationQueryService.Handle(new GetAllNotificationsByWorkerIdQuery(workerId));
+
+                var notificationResources =
+                    notifications.Select(NotificationResourceFromEntityAssembler.ToResourceFromEntity);
+
+                return Ok(notificationResources);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("get-all-notifications-admins")]
+        public async Task<IActionResult> GetAllNotificationsForAdmins([FromQuery] int hotelId)
+        {
+            try
+            {
+                var notifications =
+                    await notificationQueryService.Handle(
+                        new GetAllNotificationsByHotelIdAndExistOwnersIdQuery(hotelId));
+
+                var notificationResources =
+                    notifications.Select(NotificationResourceFromEntityAssembler.ToResourceFromEntity);
+
+                return Ok(notificationResources);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }
