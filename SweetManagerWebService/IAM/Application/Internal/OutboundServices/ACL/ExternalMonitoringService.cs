@@ -1,8 +1,8 @@
 using SweetManagerWebService.Monitoring.Interfaces.ACL;
 
-namespace SweetManagerWebService.IAM.Application.Internal.OutboundServices;
+namespace SweetManagerWebService.IAM.Application.Internal.OutboundServices.ACL;
 
-public class ExternalRoomService(IMonitoringContextFacade monitoringContextFacade)
+public class ExternalMonitoringService(IMonitoringContextFacade monitoringContextFacade)
 {
     public async Task<int> FetchRoomCount(int hotelId)
     {
