@@ -1,6 +1,6 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using SweetManagerWebService.IAM.Application.Internal.OutboundServices;
+using SweetManagerWebService.IAM.Application.Internal.OutboundServices.ACL;
 using SweetManagerWebService.IAM.Domain.Model.Queries;
 using SweetManagerWebService.IAM.Domain.Services.Users.Admin;
 using SweetManagerWebService.IAM.Domain.Services.Users.Owner;
@@ -8,6 +8,7 @@ using SweetManagerWebService.IAM.Domain.Services.Users.Worker;
 using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using SweetManagerWebService.IAM.Interfaces.REST.Resource.Authentication.User;
 using SweetManagerWebService.IAM.Interfaces.REST.Transform.Authentication.User;
+using SweetManagerWebService.Profiles.Interfaces.REST.Transform.Customer;
 
 namespace SweetManagerWebService.IAM.Interfaces.REST;
 
@@ -19,8 +20,44 @@ public class UserController(IWorkerCommandService workerCommandService,
     IOwnerCommandService ownerCommandService,
     IAdminQueryService adminQueryService,
     IWorkerQueryService workerQueryService,
-    ExternalRoomService externalRoomService) : ControllerBase
+    ExternalMonitoringService externalMonitoringService,
+    ExternalProfilesService externalProfilesService) : ControllerBase
 {
+
+    [HttpGet("get-all-admins")]
+    public async Task<IActionResult> GetAdmins([FromQuery]int hotelId)
+    {
+        try
+        {
+            var admins = await adminQueryService.Handle(new GetAllUsersQuery(hotelId));
+
+            var adminResources = admins.Select(UserResourceFromEntityAssembler.ToResourceFromEntity);
+            
+            return Ok(adminResources);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("get-all-workers")]
+    public async Task<IActionResult> getAllWorkers([FromQuery]int hotelId)
+    {
+        try
+        {
+            var workers = await workerQueryService.Handle(new GetAllUsersQuery(hotelId));
+
+            var workerResources = workers.Select(UserResourceFromEntityAssembler.ToResourceFromEntity);
+            
+            return Ok(workerResources);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
     [HttpGet("get-admin-count")]
     [Authorize]
     public async Task<IActionResult> GetAdminCount([FromQuery]int hotelId)
@@ -63,7 +100,7 @@ public class UserController(IWorkerCommandService workerCommandService,
     {
         try
         {
-            var rooms = await externalRoomService.FetchRoomCount(hotelId);
+            var rooms = await externalMonitoringService.FetchRoomCount(hotelId);
 
             return Ok(new { count = rooms });
         }
