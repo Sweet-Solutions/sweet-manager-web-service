@@ -44,6 +44,7 @@ using SweetManagerWebService.IAM.Application.Internal.CommandServices.Credential
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.Roles;
 using SweetManagerWebService.IAM.Application.Internal.CommandServices.User;
 using SweetManagerWebService.IAM.Application.Internal.OutboundServices;
+using SweetManagerWebService.IAM.Application.Internal.OutboundServices.ACL;
 using SweetManagerWebService.IAM.Application.Internal.QueryServices.Assignments;
 using SweetManagerWebService.IAM.Application.Internal.QueryServices.Credential;
 using SweetManagerWebService.IAM.Application.Internal.QueryServices.Roles;
@@ -85,6 +86,8 @@ using SweetManagerWebService.Profiles.Domain.Services.Customer;
 using SweetManagerWebService.Profiles.Domain.Services.Hotel;
 using SweetManagerWebService.Profiles.Domain.Services.Provider;
 using SweetManagerWebService.Profiles.Infrastructure.Persistence.EFC.Repositories;
+using SweetManagerWebService.Profiles.Interfaces.ACL;
+using SweetManagerWebService.Profiles.Interfaces.ACL.Services;
 using SweetManagerWebService.ResourceManagement.Application.CommandService;
 using SweetManagerWebService.ResourceManagement.Application.QueryService;
 using SweetManagerWebService.ResourceManagement.Domain.Repositories;
@@ -231,7 +234,9 @@ builder.Services.AddScoped<IAssignmentWorkerCommandService, AssignmentWorkerComm
 builder.Services.AddScoped<IAssignmentWorkerQueryService, AssignmentWorkerQueryService>();
 builder.Services.AddScoped<IAssignmentWorkerRepository, AssignmentWorkerRepository>();
 
-builder.Services.AddScoped<ExternalRoomService>();
+builder.Services.AddScoped<ExternalMonitoringService>();
+
+builder.Services.AddScoped<ExternalProfilesService>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -319,6 +324,10 @@ builder.Services.AddScoped<IProviderQueryService, ProviderQueryService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IProviderRepository, ProviderRepository>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+
+builder.Services.AddScoped<IProfilesContextFacade, ProfilesContextFacade>();
+
+
 
 #endregion 
 
