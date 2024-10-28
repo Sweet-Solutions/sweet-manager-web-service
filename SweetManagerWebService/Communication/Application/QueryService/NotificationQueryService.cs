@@ -16,4 +16,15 @@ public class NotificationQueryService(INotificationRepository notificationReposi
     {
         return await notificationRepository.FindByIdAsync(query.Id);
     }
+
+    public async Task<IEnumerable<Notification>> Handle(GetAllNotificationsByWorkerIdQuery query)
+    {
+        return await notificationRepository.FindAllByWorkerIdAsync(query.WorkersId);
+    }
+
+    public async Task<IEnumerable<Notification>> Handle(GetAllNotificationsByHotelIdAndExistOwnersIdQuery query)
+    {
+        return await notificationRepository.FindAllByHotelIdAndExitsOwnersIdAsync(query.HotelId);
+    }
+    
 }
