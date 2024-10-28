@@ -23,15 +23,20 @@ public class AssignmentWorkerCommandService(IAssignmentWorkerRepository assignme
             if (string.IsNullOrEmpty(command.WorkersId.ToString()) || string.IsNullOrEmpty(command.AdminsId.ToString()))
                 throw new Exception("No empty dnis.");
             
-            if (command.WorkersId is 0)
+            if (command.WorkersId is 0 && command.AdminsId is not 0)
             {
                 await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersAreasId,
                     null, command.AdminsId, command.StartDate, command.FinalDate, command.State));
             }
-            else
+            else if(command.AdminsId is 0 && command.WorkersId is not 0)
             {
                 await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersAreasId,
                     command.WorkersId, null, command.StartDate, command.FinalDate, command.State));
+            }
+            else
+            {
+                await assignmentWorkerRepository.AddAsync(new AssignmentWorker(command.WorkersAreasId,
+                    command.WorkersId, command.AdminsId, command.StartDate, command.FinalDate, command.State));
             }
             
             await unitOfWork.CompleteAsync();
