@@ -45,9 +45,9 @@ namespace SweetManagerWebService.Communication.Infrastructure.Persistence.EFC.Re
                 from wo in Context.Set<Worker>().ToList()
                 join ass in Context.Set<AssignmentWorker>().ToList() on wo.Id equals ass.WorkersId
                 join ad in Context.Set<Admin>().ToList() on ass.AdminsId equals ad.Id
-                join no in Context.Set<Notification>().ToList() on ad.Id equals no.AdminsId
-                where wo.Id.Equals(workerId)
-                select no
+                join noti in Context.Set<Notification>().ToList() on ad.Id equals noti.AdminsId
+                where wo.Id.Equals(workerId) && noti.OwnersId.Equals(null)
+                select noti
             ));
             
             queryAsync.Start();
