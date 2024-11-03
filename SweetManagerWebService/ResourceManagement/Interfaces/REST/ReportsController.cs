@@ -26,11 +26,22 @@ namespace SweetManagerWebService.ResourceManagement.Interfaces.REST
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllReports()
+        public async Task<IActionResult> AllReports([FromQuery] int hotelId)
         {
-            var reports = await reportQueryService.Handle(new GetAllReportsQuery());
-            var reportsResource = reports.Select(ReportResourceFromEntityAssembler.ToResourceFromEntity);
-            return Ok(reportsResource);
+            try
+            {
+                // Pass HotelId into the query
+                var result = await reportQueryService.Handle(new GetAllReportsQuery(hotelId));
+
+                // Map the result to a collection of supply resources
+                var reportResource = result.Select(ReportResourceFromEntityAssembler.ToResourceFromEntity);
+
+                return Ok(reportResource);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
