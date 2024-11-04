@@ -5,5 +5,5 @@ namespace SweetManagerWebService.ResourceManagement.Domain.Repositories;
 
 public interface IReportRepository : IBaseRepository<Report>
 {
-    Task<IEnumerable<Report>> FindByTypeReportIdAsync(int typeReportId, int HotelId);
+    Task<IEnumerable<Report>> FindByTypeReportIdAsync(int HotelId);
 }

@@ -1,3 +1,4 @@
+using SweetManagerWebService.Communication.Domain.Model.Aggregates;
 using SweetManagerWebService.IAM.Domain.Model.Aggregates;
 using SweetManagerWebService.IAM.Domain.Model.Entities.Roles;
 using SweetManagerWebService.Profiles.Domain.Model.Entities;
@@ -17,21 +18,23 @@ namespace SweetManagerWebService.ResourceManagement.Infrastructure.Persistence.E
             _context = context;
         }
 
-        public async Task<IEnumerable<Report>> FindByTypeReportIdAsync(int typeReportId, int hotelId)
+        public async Task<IEnumerable<Report>> FindByTypeReportIdAsync(int HotelId)
         {
             return await Task.Run(() => (
                 from rprt in _context.Set<Report>().ToList()
                 join wkr in _context.Set<Worker>().ToList()
                     on rprt.WorkersId equals wkr.Id
-                join role in _context.Set<Role>().ToList()
-                    on wkr.RolesId equals role.Id
+                join notification in _context.Set<Notification>().ToList()
+                    on wkr.Id equals notification.WorkersId
                 join ow in _context.Set<Owner>().ToList()
-                    on wkr.Id equals ow.Id
+                    on notification.OwnersId equals ow.Id
                 join htls in _context.Set<Hotel>().ToList()
                     on ow.Id equals htls.OwnersId
-                where rprt.TypesReportsId == typeReportId && htls.Id == hotelId
+                where  htls.Id == HotelId
                 select rprt
             ).ToList());
         }
+
+ 
     }
 }
