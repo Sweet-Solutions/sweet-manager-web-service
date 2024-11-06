@@ -55,13 +55,13 @@ public class WorkerAreaController(IWorkerAreaCommandService workerAreaCommandSer
 
     [HttpGet("get-worker-area-by-name")]
     [Authorize]
-    public async Task<IActionResult> GetWorkerAreaByName([FromBody] SearchingQueriesForName resource)
+    public async Task<IActionResult> GetWorkerAreaByName([FromQuery] string name, [FromQuery] int hotelId)
     {
         try
         {
             var workerArea =
                 await workerAreaQueryService.Handle(
-                    new GetWorkerAreaByNameAndHotelIdQuery(resource.Name, resource.HotelId));
+                    new GetWorkerAreaByNameAndHotelIdQuery(name, hotelId));
 
             if (workerArea is null)
                 return BadRequest("Any work area has the given name");

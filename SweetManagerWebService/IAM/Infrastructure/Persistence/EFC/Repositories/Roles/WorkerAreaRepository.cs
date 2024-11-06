@@ -18,12 +18,12 @@ public class WorkerAreaRepository(SweetManagerContext context) : BaseRepository<
                 on wa.Id equals aw.WorkersAreasId
             join ad in Context.Set<Admin>().ToList()
                 on aw.AdminsId equals ad.Id
-            join ro in Context.Set<Role>().ToList()
-                on ad.RolesId equals ro.Id
+            join no in Context.Set<Notification>().ToList()
+                on ad.Id equals no.AdminsId
             join ow in Context.Set<Owner>().ToList()
-                on ro.Id equals ow.RolesId
+                on no.OwnersId equals ow.Id
             join ho in Context.Set<Hotel>().ToList()
-                on ow.Id equals ho.OwnersId
+                on ow.Id equals  ho.OwnersId
             where ho.Id.Equals(hotelId)
             select wa
         ).ToList());
@@ -41,7 +41,7 @@ public class WorkerAreaRepository(SweetManagerContext context) : BaseRepository<
                 on nt.OwnersId equals ow.Id
             join ho in Context.Set<Hotel>().ToList()
                 on ow.Id equals ho.OwnersId
-            where wa.Name == name && ho.Id == hotelId
+            where wa.Name.Equals(name) && ho.Id.Equals(hotelId)
             select wa
         ).FirstOrDefault());
 
@@ -58,7 +58,7 @@ public class WorkerAreaRepository(SweetManagerContext context) : BaseRepository<
                 on nt.OwnersId equals ow.Id
             join ho in Context.Set<Hotel>().ToList()
                 on ow.Id equals ho.OwnersId
-            where wa.Name == name && ho.Id == hotelId
+            where wa.Name.Equals(name) && ho.Id.Equals(hotelId)
             select wa.Id
         ).FirstOrDefault());
 

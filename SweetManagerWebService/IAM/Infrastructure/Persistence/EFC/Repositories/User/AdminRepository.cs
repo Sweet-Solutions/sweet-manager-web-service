@@ -63,6 +63,6 @@ public class AdminRepository(SweetManagerContext context) : BaseRepository<Admin
             join ho in Context.Set<Hotel>().ToList()
                 on ow.Id equals ho.OwnersId
             where ad.Id == id
-            select ad.Id
+            select ho.Id
         ).FirstOrDefault());
 }
