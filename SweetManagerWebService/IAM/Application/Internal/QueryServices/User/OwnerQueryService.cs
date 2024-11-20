@@ -14,7 +14,12 @@ public class OwnerQueryService(IOwnerRepository ownerRepository) : IOwnerQuerySe
 
     public async Task<Owner?> Handle(GetUserByIdQuery query)
     {
-        return await ownerRepository.FindById(query.Id);
+        var owner = await ownerRepository.FindById(query.Id);
+
+        if (owner is null)
+            throw new Exception("The given Id doesnt correspond with any owner");
+
+        return owner;
     }
 
     public async Task<Owner?> Handle(GetUserByEmailQuery query)
