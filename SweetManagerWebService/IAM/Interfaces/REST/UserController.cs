@@ -8,7 +8,6 @@ using SweetManagerWebService.IAM.Domain.Services.Users.Worker;
 using SweetManagerWebService.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using SweetManagerWebService.IAM.Interfaces.REST.Resource.Authentication.User;
 using SweetManagerWebService.IAM.Interfaces.REST.Transform.Authentication.User;
-using SweetManagerWebService.Profiles.Interfaces.REST.Transform.Customer;
 
 namespace SweetManagerWebService.IAM.Interfaces.REST;
 
@@ -20,9 +19,28 @@ public class UserController(IWorkerCommandService workerCommandService,
     IOwnerCommandService ownerCommandService,
     IAdminQueryService adminQueryService,
     IWorkerQueryService workerQueryService,
+    IOwnerQueryService ownerQueryService,
     ExternalMonitoringService externalMonitoringService,
     ExternalProfilesService externalProfilesService) : ControllerBase
 {
+    
+    [HttpGet("get-owner-id")]
+    public async Task<IActionResult> GetOwnerById([FromQuery] int id)
+    {
+        try
+        {
+            var owner = await ownerQueryService.Handle(new GetUserByIdQuery(id));
+
+            var ownerResource = UserResourceFromEntityAssembler.ToResourceFromEntity(owner!);
+
+            return Ok(ownerResource);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
 
     [HttpGet("get-all-admins")]
     public async Task<IActionResult> GetAdmins([FromQuery]int hotelId)
