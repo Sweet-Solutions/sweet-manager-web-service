@@ -108,6 +108,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
+#region LOAD_BALANCER_CONFIG
+// Añadir YARP
+builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+#endregion
 
 #region Database Configuration
 // Add Database Connection
